@@ -2,7 +2,11 @@ import { Settings, DollarSign, ChartBar, FileText, Download, Users2 } from "luci
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
-const Sidebar = () => {
+interface SidebarProps {
+  onNavigate: (view: string) => void;
+}
+
+const Sidebar = ({ onNavigate }: SidebarProps) => {
   return (
     <nav className="w-64 p-8 border-r border-warm-100">
       <div className="space-y-8">
@@ -13,19 +17,35 @@ const Sidebar = () => {
 
         {/* Navigation Links */}
         <div className="space-y-2">
-          <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+          <a 
+            href="#" 
+            onClick={() => onNavigate('dashboard')}
+            className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+          >
             <Settings className="w-5 h-5" />
             <span>Dashboard</span>
           </a>
-          <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+          <a 
+            href="#" 
+            onClick={() => onNavigate('reimbursements')}
+            className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+          >
             <DollarSign className="w-5 h-5" />
             <span>Reimbursements</span>
           </a>
-          <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+          <a 
+            href="#" 
+            onClick={() => onNavigate('analytics')}
+            className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+          >
             <ChartBar className="w-5 h-5" />
             <span>Analytics</span>
           </a>
-          <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+          <a 
+            href="#" 
+            onClick={() => onNavigate('invoices')}
+            className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+          >
             <FileText className="w-5 h-5" />
             <span>Invoices</span>
           </a>

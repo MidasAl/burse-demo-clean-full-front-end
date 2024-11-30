@@ -1,10 +1,7 @@
 import { motion } from "framer-motion";
 import { Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +11,7 @@ import {
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import ReimbursementCard from "@/components/ReimbursementCard";
+import AnalyticsView from "@/components/analytics/AnalyticsView";
 
 const Index = () => {
   const [selectedExpense, setSelectedExpense] = useState<{
@@ -26,6 +24,8 @@ const Index = () => {
     status?: string;
     aiRecommendation?: string;
   } | null>(null);
+
+  const [currentView, setCurrentView] = useState('reimbursements');
 
   const reimbursementRequests = [
     {
@@ -52,71 +52,77 @@ const Index = () => {
 
   return (
     <div className="flex h-screen bg-warm-50">
-      <Sidebar />
+      <Sidebar onNavigate={(view) => setCurrentView(view)} />
 
       {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl font-semibold">Reimbursement Requests</h1>
-            <Button variant="default" className="bg-warm-500 hover:bg-warm-400">
-              New Request
-            </Button>
-          </div>
+          {currentView === 'analytics' ? (
+            <AnalyticsView />
+          ) : (
+            <>
+              {/* Header */}
+              <div className="flex justify-between items-center mb-8">
+                <h1 className="text-2xl font-semibold">Reimbursement Requests</h1>
+                <Button variant="default" className="bg-warm-500 hover:bg-warm-400">
+                  New Request
+                </Button>
+              </div>
 
-          {/* Balance Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Card className="mb-8">
-              <CardContent className="pt-6">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <div className="text-3xl font-bold">$1,000.00</div>
-                    <div className="text-warm-400 mt-1">Pending Reimbursements</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Bot className="w-5 h-5 text-warm-400" />
-                    <span className="text-sm text-warm-400">AI-Powered Approval</span>
-                  </div>
+              {/* Balance Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card className="mb-8">
+                  <CardContent className="pt-6">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div className="text-3xl font-bold">$1,000.00</div>
+                        <div className="text-warm-400 mt-1">Pending Reimbursements</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Bot className="w-5 h-5 text-warm-400" />
+                        <span className="text-sm text-warm-400">AI-Powered Approval</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Filters */}
+              <div className="flex justify-between items-center mb-8">
+                <div className="flex space-x-4">
+                  <Button variant="ghost" className="text-warm-500 font-medium">
+                    All Requests
+                  </Button>
+                  <Button variant="ghost" className="text-warm-400">
+                    Pending Review
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+              </div>
 
-          {/* Filters */}
-          <div className="flex justify-between items-center mb-8">
-            <div className="flex space-x-4">
-              <Button variant="ghost" className="text-warm-500 font-medium">
-                All Requests
-              </Button>
-              <Button variant="ghost" className="text-warm-400">
-                Pending Review
-              </Button>
-            </div>
-          </div>
-
-          {/* Reimbursement Requests List */}
-          <div className="space-y-6">
-            <div className="text-sm font-medium text-warm-400">Today</div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4"
-            >
-              {reimbursementRequests.map((request, index) => (
-                <ReimbursementCard 
-                  key={index}
-                  request={request}
-                  onClick={setSelectedExpense}
-                />
-              ))}
-            </motion.div>
-          </div>
+              {/* Reimbursement Requests List */}
+              <div className="space-y-6">
+                <div className="text-sm font-medium text-warm-400">Today</div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="space-y-4"
+                >
+                  {reimbursementRequests.map((request, index) => (
+                    <ReimbursementCard 
+                      key={index}
+                      request={request}
+                      onClick={setSelectedExpense}
+                    />
+                  ))}
+                </motion.div>
+              </div>
+            </>
+          )}
         </div>
       </main>
 
