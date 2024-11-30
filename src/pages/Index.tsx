@@ -23,6 +23,10 @@ const Index = () => {
           {/* Navigation Links */}
           <div className="space-y-2">
             <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+              <Settings className="w-5 h-5" />
+              <span>Admin Dashboard</span>
+            </a>
+            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
               <DollarSign className="w-5 h-5" />
               <span>Expenses</span>
             </a>
@@ -37,10 +41,6 @@ const Index = () => {
             <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
               <Download className="w-5 h-5" />
               <span>Export</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
-              <Settings className="w-5 h-5" />
-              <span>Admin Dashboard</span>
             </a>
           </div>
         </div>
