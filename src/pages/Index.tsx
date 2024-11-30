@@ -1,86 +1,129 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Database, Users, CheckCircle2, AlertCircle } from "lucide-react";
-
-const integrations = [
-  {
-    type: "ERP",
-    name: "SAP Integration",
-    status: "connected",
-    description: "Enterprise resource planning system integration",
-    icon: Database,
-  },
-  {
-    type: "CRM",
-    name: "Salesforce",
-    status: "disconnected",
-    description: "Customer relationship management platform",
-    icon: Users,
-  },
-];
+import { ChartBar, FileText, Download, DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const Index = () => {
   return (
-    <div className="min-h-screen p-8 md:p-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-6xl mx-auto space-y-8"
-      >
-        <header className="text-center space-y-4">
-          <span className="inline-block px-4 py-1.5 bg-warm-100 text-warm-500 rounded-full text-sm font-medium">
-            Dashboard
-          </span>
-          <h1 className="text-4xl md:text-5xl font-semibold text-warm-500">
-            System Integrations
-          </h1>
-          <p className="text-warm-400 max-w-2xl mx-auto">
-            Connect and manage your enterprise systems in one place
-          </p>
-        </header>
+    <div className="flex h-screen bg-warm-50">
+      {/* Sidebar */}
+      <nav className="w-64 p-8 border-r border-warm-100">
+        <div className="space-y-8">
+          {/* Logo */}
+          <div className="text-2xl font-bold tracking-tight">
+            BURSE
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {integrations.map((integration) => (
-            <motion.div
-              key={integration.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="p-3 bg-warm-50 rounded-xl">
-                    <integration.icon className="w-6 h-6 text-warm-500" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium text-warm-400">
-                      {integration.type}
-                    </span>
-                    <h3 className="text-xl font-semibold text-warm-500">
-                      {integration.name}
-                    </h3>
-                  </div>
-                </div>
-                {integration.status === "connected" ? (
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                ) : (
-                  <AlertCircle className="w-5 h-5 text-warm-300" />
-                )}
-              </div>
-
-              <p className="mt-4 text-warm-400">
-                {integration.description}
-              </p>
-
-              <button className="mt-6 w-full py-3 px-4 bg-warm-50 hover:bg-warm-100 text-warm-500 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center group">
-                {integration.status === "connected" ? "Manage Integration" : "Connect Now"}
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
-              </button>
-            </motion.div>
-          ))}
+          {/* Navigation Links */}
+          <div className="space-y-2">
+            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+              <DollarSign className="w-5 h-5" />
+              <span>Expenses</span>
+            </a>
+            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+              <ChartBar className="w-5 h-5" />
+              <span>Analytics</span>
+            </a>
+            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+              <FileText className="w-5 h-5" />
+              <span>Invoices</span>
+            </a>
+            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+              <Download className="w-5 h-5" />
+              <span>Export</span>
+            </a>
+          </div>
         </div>
-      </motion.div>
+
+        {/* User Profile */}
+        <div className="absolute bottom-8 flex items-center space-x-3">
+          <div className="w-10 h-10 rounded-full bg-warm-200" />
+          <div>
+            <div className="font-medium">Sara</div>
+            <div className="text-sm text-warm-400">ACME Ltd</div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="flex-1 p-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-2xl font-semibold">Expenses</h1>
+            <Button variant="default" className="bg-warm-500 hover:bg-warm-400">
+              Add expense
+            </Button>
+          </div>
+
+          {/* Balance Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card className="mb-8">
+              <CardContent className="pt-6">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="text-3xl font-bold">1,000.00 GBP</div>
+                    <div className="text-warm-400 mt-1">Available balance</div>
+                  </div>
+                  <Button variant="outline">Top-up →</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Filters */}
+          <div className="flex justify-between items-center mb-8">
+            <div className="flex space-x-4">
+              <Button variant="ghost" className="text-warm-500 font-medium">
+                All
+              </Button>
+              <Button variant="ghost" className="text-warm-400">
+                Review
+              </Button>
+            </div>
+            <Button variant="ghost" size="icon">
+              <Download className="w-4 h-4" />
+            </Button>
+          </div>
+
+          {/* Expenses List */}
+          <div className="space-y-6">
+            <div className="text-sm font-medium text-warm-400">Today</div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-4"
+            >
+              {/* Sample Expense Items */}
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-10 h-10 rounded-full bg-warm-100" />
+                      <div>
+                        <div className="font-medium">Office Supplies</div>
+                        <div className="text-sm text-warm-400">John Doe</div>
+                      </div>
+                    </div>
+                    <div className="font-medium">24.50 GBP</div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
