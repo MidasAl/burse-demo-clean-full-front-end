@@ -9,6 +9,7 @@ interface ReimbursementRequest {
   note?: string;
   status?: string;
   aiRecommendation?: string;
+  rejectionReason?: string;
 }
 
 interface ReimbursementCardProps {
@@ -17,6 +18,17 @@ interface ReimbursementCardProps {
 }
 
 const ReimbursementCard = ({ request, onClick }: ReimbursementCardProps) => {
+  const getStatusColor = (status: string | undefined) => {
+    switch (status) {
+      case 'AI Approved':
+        return 'text-green-600';
+      case 'AI Rejected':
+        return 'text-red-600';
+      default:
+        return 'text-warm-400';
+    }
+  };
+
   return (
     <Card 
       className="hover:shadow-md transition-shadow cursor-pointer"
@@ -32,7 +44,9 @@ const ReimbursementCard = ({ request, onClick }: ReimbursementCardProps) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-warm-400">{request.status}</span>
+            <span className={`text-sm ${getStatusColor(request.status)}`}>
+              {request.status}
+            </span>
             <div className="font-medium">{request.amount}</div>
           </div>
         </div>
