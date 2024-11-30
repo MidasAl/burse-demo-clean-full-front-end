@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChartBar, FileText, Download, DollarSign } from "lucide-react";
+import { ChartBar, FileText, Download, DollarSign, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,6 +38,10 @@ const Index = () => {
               <Download className="w-5 h-5" />
               <span>Export</span>
             </a>
+            <a href="#" className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors">
+              <Settings className="w-5 h-5" />
+              <span>Admin Dashboard</span>
+            </a>
           </div>
         </div>
 
@@ -45,8 +49,8 @@ const Index = () => {
         <div className="absolute bottom-8 flex items-center space-x-3">
           <div className="w-10 h-10 rounded-full bg-warm-200" />
           <div>
-            <div className="font-medium">Sara</div>
-            <div className="text-sm text-warm-400">ACME Ltd</div>
+            <div className="font-medium">Shalim</div>
+            <div className="text-sm text-warm-400">Duke University</div>
           </div>
         </div>
       </nav>
@@ -72,7 +76,7 @@ const Index = () => {
               <CardContent className="pt-6">
                 <div className="flex justify-between items-center">
                   <div>
-                    <div className="text-3xl font-bold">1,000.00 GBP</div>
+                    <div className="text-3xl font-bold">$1,000.00</div>
                     <div className="text-warm-400 mt-1">Available balance</div>
                   </div>
                   <Button variant="outline">Top-up →</Button>
@@ -116,7 +120,7 @@ const Index = () => {
                         <div className="text-sm text-warm-400">John Doe</div>
                       </div>
                     </div>
-                    <div className="font-medium">24.50 GBP</div>
+                    <div className="font-medium">$24.50</div>
                   </div>
                 </CardContent>
               </Card>
