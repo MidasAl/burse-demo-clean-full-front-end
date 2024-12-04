@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Download, FileDown, Users2 } from "lucide-react";
+import { Download, FileDown, Users2, Settings } from "lucide-react";
 import GroupManageDialog from "./GroupManageDialog";
+import PolicyEditorDialog from "./PolicyEditorDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,6 +78,7 @@ const getStatusColor = (status: string) => {
 
 const DepartmentCard = ({ department, members }: DepartmentCardProps) => {
   const [isManageDialogOpen, setIsManageDialogOpen] = useState(false);
+  const [isPolicyDialogOpen, setIsPolicyDialogOpen] = useState(false);
   const { toast } = useToast();
   const aiSummary = getAISummary(department);
 
@@ -99,8 +101,19 @@ const DepartmentCard = ({ department, members }: DepartmentCardProps) => {
       <Card className="p-6 hover:shadow-lg transition-shadow">
         <div className="space-y-4">
           <div className="space-y-2">
-            <div className="text-4xl font-bold text-warm-500">
-              {department[0]}
+            <div className="flex items-center justify-between">
+              <div className="text-4xl font-bold text-warm-500">
+                {department[0]}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsPolicyDialogOpen(true)}
+                className="text-warm-400 hover:text-warm-500"
+              >
+                <Settings className="w-4 h-4 mr-2" />
+                Edit Policies
+              </Button>
             </div>
             <h3 className="text-xl font-semibold">{department}</h3>
             <div className="text-sm text-warm-400">
@@ -160,6 +173,12 @@ const DepartmentCard = ({ department, members }: DepartmentCardProps) => {
         onClose={() => setIsManageDialogOpen(false)}
         department={department}
         members={members}
+      />
+
+      <PolicyEditorDialog
+        isOpen={isPolicyDialogOpen}
+        onClose={() => setIsPolicyDialogOpen(false)}
+        department={department}
       />
     </>
   );
