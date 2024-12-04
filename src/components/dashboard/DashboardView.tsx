@@ -1,8 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy } from "lucide-react";
+import { Copy, Users2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
+// Mock data for members
+const members = [
+  { id: 1, name: "Sarah Johnson", department: "Finance Department", initials: "SJ" },
+  { id: 2, name: "Michael Chen", department: "IT Department", initials: "MC" },
+  { id: 3, name: "Emily Rodriguez", department: "HR Department", initials: "ER" },
+  { id: 4, name: "James Wilson", department: "Marketing Department", initials: "JW" },
+  { id: 5, name: "Aisha Patel", department: "Research & Development", initials: "AP" },
+];
 
 const DashboardView = () => {
   const [inviteCode, setInviteCode] = useState<string | null>(null);
@@ -84,8 +94,25 @@ const DashboardView = () => {
       {/* Members Section */}
       <Card className="p-6">
         <h2 className="text-2xl font-semibold mb-8">Joined Members</h2>
-        <div className="flex items-center justify-center py-12 text-warm-400">
-          No requests yet
+        <div className="space-y-4">
+          {members.map((member) => (
+            <div 
+              key={member.id} 
+              className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm"
+            >
+              <div className="flex items-center space-x-4">
+                <Avatar>
+                  <AvatarFallback className="bg-warm-100 text-warm-500">
+                    {member.initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-medium">{member.name}</div>
+                  <div className="text-sm text-warm-400">{member.department}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </Card>
     </div>
