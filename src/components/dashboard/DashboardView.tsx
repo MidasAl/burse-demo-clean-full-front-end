@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Users2, BrainCircuit } from "lucide-react";
+import { Users2, BrainCircuit, ChevronDown, ChevronUp } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import DepartmentCard from "./DepartmentCard";
 import InviteCodeCard from "./InviteCodeCard";
 import InsightsCards from "./InsightsCards";
@@ -41,6 +42,7 @@ interface DashboardViewProps {
 
 const DashboardView = ({ onNavigate }: DashboardViewProps) => {
   const [inviteCode, setInviteCode] = useState<string | null>(null);
+  const [isGroupsOpen, setIsGroupsOpen] = useState(true);
   const { toast } = useToast();
 
   const generateCode = () => {
@@ -108,32 +110,45 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
 
       {/* Members Section */}
       <Card className="p-6">
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold">Your Groups</h2>
-        </div>
+        <Collapsible open={isGroupsOpen} onOpenChange={setIsGroupsOpen}>
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-semibold">Your Groups</h2>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm">
+                {isGroupsOpen ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
+              </Button>
+            </CollapsibleTrigger>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(groupedMembers).map(([department, departmentMembers]) => (
-            <DepartmentCard 
-              key={department} 
-              department={department} 
-              members={departmentMembers} 
-            />
-          ))}
-          
-          {/* Join Another Group Card */}
-          <Card 
-            className="p-6 border-dashed flex items-center justify-center cursor-pointer hover:bg-warm-50 transition-colors"
-            onClick={generateCode}
-          >
-            <div className="text-center space-y-4">
-              <div className="w-12 h-12 bg-[#494E5B] rounded-full flex items-center justify-center mx-auto text-white">
-                <Users2 className="w-6 h-6" />
-              </div>
-              <p className="text-warm-400">Invite Another Group</p>
+          <CollapsibleContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(groupedMembers).map(([department, departmentMembers]) => (
+                <DepartmentCard 
+                  key={department} 
+                  department={department} 
+                  members={departmentMembers} 
+                />
+              ))}
+              
+              {/* Join Another Group Card */}
+              <Card 
+                className="p-6 border-dashed flex items-center justify-center cursor-pointer hover:bg-warm-50 transition-colors"
+                onClick={generateCode}
+              >
+                <div className="text-center space-y-4">
+                  <div className="w-12 h-12 bg-[#494E5B] rounded-full flex items-center justify-center mx-auto text-white">
+                    <Users2 className="w-6 h-6" />
+                  </div>
+                  <p className="text-warm-400">Invite Another Group</p>
+                </div>
+              </Card>
             </div>
-          </Card>
-        </div>
+          </CollapsibleContent>
+        </Collapsible>
       </Card>
 
       {/* AI Recommendations Section */}
