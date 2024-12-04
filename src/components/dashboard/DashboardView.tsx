@@ -104,7 +104,7 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
               <div className="w-12 h-12 bg-[#494E5B] rounded-full flex items-center justify-center mx-auto text-white">
                 <Users2 className="w-6 h-6" />
               </div>
-              <p className="text-warm-400">Join Another Group</p>
+              <p className="text-warm-400">Invite Another Group</p>
             </div>
           </Card>
         </div>
