@@ -1,6 +1,15 @@
-import { Settings, DollarSign, ChartBar, FileText, Users2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Settings, DollarSign, ChartBar, FileText, Users2, ChevronLeft, ChevronRight, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
 
 interface SidebarProps {
   onNavigate: (view: string) => void;
@@ -8,6 +17,15 @@ interface SidebarProps {
 
 const Sidebar = ({ onNavigate }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    toast({
+      description: "Successfully logged out",
+      duration: 2000,
+    });
+    // Add actual logout logic here when authentication is implemented
+  };
 
   return (
     <nav className={`relative ${isCollapsed ? 'w-16' : 'w-64'} p-8 border-r border-warm-100 transition-all duration-300`}>
@@ -58,15 +76,33 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
         </div>
       </div>
 
-      {/* User Profile */}
-      <div className="absolute bottom-8 flex items-center space-x-3">
-        <div className="w-10 h-10 rounded-full bg-warm-200" />
-        {!isCollapsed && (
-          <div>
-            <div className="font-medium">Shalim</div>
-            <div className="text-sm text-warm-400">Duke University</div>
-          </div>
-        )}
+      {/* User Profile Dropdown */}
+      <div className="absolute bottom-8">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="flex items-center space-x-3 p-0 h-auto hover:bg-transparent">
+              <div className="w-10 h-10 rounded-full bg-warm-200" />
+              {!isCollapsed && (
+                <div className="text-left">
+                  <div className="font-medium">Shalim</div>
+                  <div className="text-sm text-warm-400">Duke University</div>
+                </div>
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => onNavigate('profile')} className="cursor-pointer">
+              <User className="mr-2 h-4 w-4" />
+              Profile Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Toggle Button */}
