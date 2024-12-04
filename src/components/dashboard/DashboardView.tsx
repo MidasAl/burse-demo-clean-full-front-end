@@ -99,7 +99,10 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
           ))}
           
           {/* Join Another Group Card */}
-          <Card className="p-6 border-dashed flex items-center justify-center">
+          <Card 
+            className="p-6 border-dashed flex items-center justify-center cursor-pointer hover:bg-warm-50 transition-colors"
+            onClick={generateCode}
+          >
             <div className="text-center space-y-4">
               <div className="w-12 h-12 bg-[#494E5B] rounded-full flex items-center justify-center mx-auto text-white">
                 <Users2 className="w-6 h-6" />
