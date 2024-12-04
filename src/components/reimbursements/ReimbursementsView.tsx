@@ -10,38 +10,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import ReimbursementCard from "@/components/ReimbursementCard";
 import { useState } from "react";
 import { ExpenseDetailsDialog } from "./ExpenseDetailsDialog";
 import { useToast } from "@/hooks/use-toast";
-
-const reimbursementRequests = [
-  {
-    title: "Office Supplies",
-    amount: "$24.50",
-    user: "John Doe",
-    date: "Today",
-    category: "Business Expense",
-    note: "Purchased office supplies for the team",
-    status: "AI Rejected",
-    department: "Engineering",
-    aiConfidence: "High" as const,
-    rejectionReason: "Receipt shows personal items mixed with office supplies. Please submit a new request with only business-related items.",
-    aiRecommendation: "Advise the user to separate personal and business items and upload a new receipt. Alternatively, approve partial amount of $15 for business items only."
-  },
-  {
-    title: "Team Lunch",
-    amount: "$156.75",
-    user: "Sarah Smith",
-    date: "Yesterday",
-    category: "Meals & Entertainment",
-    note: "Team lunch meeting with clients",
-    status: "AI Approved",
-    department: "Sales",
-    aiConfidence: "High" as const,
-    aiRecommendation: "Expense matches company policy for client meetings. Receipt verified. Recommended for approval."
-  }
-];
+import { reimbursementRequests } from "./mockData";
+import ReimbursementsList from "./ReimbursementsList";
+import type { ReimbursementRequest } from "./types";
 
 const departments = {
   "Engineering": {
@@ -57,35 +31,23 @@ const departments = {
 };
 
 const ReimbursementsView = () => {
-  const [selectedExpense, setSelectedExpense] = useState<{
-    title: string;
-    amount: string;
-    user: string;
-    date: string;
-    category?: string;
-    note?: string;
-    status?: string;
-    aiRecommendation?: string;
-    rejectionReason?: string;
-    aiConfidence?: "High" | "Medium" | "Low";
-  } | null>(null);
-
+  const [selectedExpense, setSelectedExpense] = useState<ReimbursementRequest | null>(null);
   const [selectedRequests, setSelectedRequests] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
-  const handleApprove = (request: typeof reimbursementRequests[0]) => {
+  const handleApprove = (request: ReimbursementRequest) => {
     toast({
       description: `Approved reimbursement for ${request.user}`,
     });
   };
 
-  const handleFlag = (request: typeof reimbursementRequests[0]) => {
+  const handleFlag = (request: ReimbursementRequest) => {
     toast({
       description: `Flagged reimbursement from ${request.user} for review`,
     });
   };
 
-  const handleNotify = (request: typeof reimbursementRequests[0]) => {
+  const handleNotify = (request: ReimbursementRequest) => {
     toast({
       description: `Notification sent to ${request.user}`,
     });
@@ -105,7 +67,7 @@ const ReimbursementsView = () => {
     });
   };
 
-  const toggleRequestSelection = (request: typeof reimbursementRequests[0]) => {
+  const toggleRequestSelection = (request: ReimbursementRequest) => {
     const newSelected = new Set(selectedRequests);
     if (newSelected.has(request.title)) {
       newSelected.delete(request.title);
@@ -139,36 +101,36 @@ const ReimbursementsView = () => {
               </Button>
             </SheetTrigger>
             <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Export Reimbursement Requests</SheetTitle>
-              <SheetDescription>
-                View and export all reimbursement requests for your group
-              </SheetDescription>
-            </SheetHeader>
-            <div className="mt-6 space-y-6">
-              {Object.entries(departments).map(([dept, stats]) => (
-                <div key={dept} className="space-y-2">
-                  <h3 className="font-medium">{dept}</h3>
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Total Requests</span>
-                      <span className="font-medium">{stats.totalRequests}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>AI Approved</span>
-                      <span className="font-medium text-green-600">{stats.approved}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Pending Review</span>
-                      <span className="font-medium text-amber-600">{stats.pending}</span>
+              <SheetHeader>
+                <SheetTitle>Export Reimbursement Requests</SheetTitle>
+                <SheetDescription>
+                  View and export all reimbursement requests for your group
+                </SheetDescription>
+              </SheetHeader>
+              <div className="mt-6 space-y-6">
+                {Object.entries(departments).map(([dept, stats]) => (
+                  <div key={dept} className="space-y-2">
+                    <h3 className="font-medium">{dept}</h3>
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between text-sm">
+                        <span>Total Requests</span>
+                        <span className="font-medium">{stats.totalRequests}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span>AI Approved</span>
+                        <span className="font-medium text-green-600">{stats.approved}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span>Pending Review</span>
+                        <span className="font-medium text-amber-600">{stats.pending}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-              <Button className="w-full mt-4">
-                Download Report
-              </Button>
-            </div>
+                ))}
+                <Button className="w-full mt-4">
+                  Download Report
+                </Button>
+              </div>
             </SheetContent>
           </Sheet>
         </div>
@@ -184,7 +146,7 @@ const ReimbursementsView = () => {
           <CardContent className="pt-6">
             <div className="flex justify-between items-center">
               <div>
-                <div className="text-3xl font-bold">$1,000.00</div>
+                <div className="text-3xl font-bold">$3,049.73</div>
                 <div className="text-warm-400 mt-1">Pending Reimbursements</div>
               </div>
             </div>
@@ -205,30 +167,15 @@ const ReimbursementsView = () => {
       </div>
 
       {/* Reimbursement Requests List */}
-      <div className="space-y-6">
-        <div className="text-sm font-medium text-warm-400">Today</div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="space-y-4"
-        >
-          {reimbursementRequests.map((request, index) => (
-            <ReimbursementCard 
-              key={index}
-              request={{
-                ...request,
-                selected: selectedRequests.has(request.title)
-              }}
-              onClick={setSelectedExpense}
-              onApprove={handleApprove}
-              onFlag={handleFlag}
-              onNotify={handleNotify}
-              onSelect={toggleRequestSelection}
-            />
-          ))}
-        </motion.div>
-      </div>
+      <ReimbursementsList
+        requests={reimbursementRequests}
+        selectedRequests={selectedRequests}
+        onSelectExpense={setSelectedExpense}
+        onApprove={handleApprove}
+        onFlag={handleFlag}
+        onNotify={handleNotify}
+        onSelect={toggleRequestSelection}
+      />
 
       <ExpenseDetailsDialog 
         selectedExpense={selectedExpense} 
