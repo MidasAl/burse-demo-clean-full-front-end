@@ -1,4 +1,4 @@
-import { Check, Clock, Users2 } from "lucide-react";
+import { Check, Clock, Users2, BrainCircuit } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
   HoverCard,
@@ -45,26 +45,32 @@ const InsightsCards = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-      <InsightCard
-        title="Reimbursements Processed"
-        value={`${insights.processed} requests`}
-        icon={<Check className="w-5 h-5 text-warm-500" />}
-        tooltip="Total number of reimbursements processed this week"
-        isActive={true}
-      />
-      <InsightCard
-        title="Average Approval Time"
-        value={`${insights.avgTime} days`}
-        icon={<Clock className="w-5 h-5 text-warm-500" />}
-        tooltip="Average time taken for reimbursement approval this week"
-      />
-      <InsightCard
-        title="Most Active Department"
-        value={`${insights.activeGroup}: ${insights.activeGroupCount}`}
-        icon={<Users2 className="w-5 h-5 text-warm-500" />}
-        tooltip="Department with the highest number of reimbursement requests this week"
-      />
+    <div className="space-y-4">
+      <div className="flex items-center space-x-2 mb-2">
+        <BrainCircuit className="w-5 h-5 text-warm-500" />
+        <h2 className="text-lg font-semibold text-warm-500">AI Insights</h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <InsightCard
+          title="Reimbursements Processed"
+          value={`${insights.processed} requests`}
+          icon={<Check className="w-5 h-5 text-warm-500 animate-pulse" />}
+          tooltip="Total number of reimbursements processed this week by AI"
+          isActive={true}
+        />
+        <InsightCard
+          title="Average Approval Time"
+          value={`${insights.avgTime} days`}
+          icon={<Clock className="w-5 h-5 text-warm-500" />}
+          tooltip="AI-calculated average time for reimbursement approval this week"
+        />
+        <InsightCard
+          title="Most Active Department"
+          value={`${insights.activeGroup}: ${insights.activeGroupCount}`}
+          icon={<Users2 className="w-5 h-5 text-warm-500" />}
+          tooltip="AI-identified department with highest reimbursement activity"
+        />
+      </div>
     </div>
   );
 };

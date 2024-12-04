@@ -124,7 +124,7 @@ const DepartmentCard = ({ department, members }: DepartmentCardProps) => {
             <div className="flex items-center space-x-2 mt-2">
               <div className={`w-2 h-2 rounded-full ${getStatusColor(aiSummary.status)}`} />
               <p className="text-sm text-warm-400">
-                {aiSummary.total} reimbursements this week: {aiSummary.approved} approved, {aiSummary.flagged} flagged for policy violations
+                AI Summary: {aiSummary.total} reimbursements this week, {aiSummary.approved} auto-approved, {aiSummary.flagged} flagged by AI for policy violations
               </p>
             </div>
           </div>
