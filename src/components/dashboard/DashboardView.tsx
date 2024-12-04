@@ -6,7 +6,6 @@ import { useToast } from "@/components/ui/use-toast";
 import DepartmentCard from "./DepartmentCard";
 import InviteCodeCard from "./InviteCodeCard";
 import InsightsCards from "./InsightsCards";
-import { AIBadge } from "../ui/ai-badge";
 
 // Mock data for members
 const members = [
@@ -152,9 +151,6 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
           ))}
         </div>
       </Card>
-
-      {/* AI Badge */}
-      <AIBadge />
     </div>
   );
 };
