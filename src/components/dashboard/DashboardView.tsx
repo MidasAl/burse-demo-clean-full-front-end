@@ -5,6 +5,7 @@ import { Users2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import DepartmentCard from "./DepartmentCard";
 import InviteCodeCard from "./InviteCodeCard";
+import InsightsCards from "./InsightsCards";
 
 // Mock data for members
 const members = [
@@ -82,6 +83,9 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
 
       {/* Invite Code Section */}
       <InviteCodeCard inviteCode={inviteCode} onCopy={copyToClipboard} />
+
+      {/* Insights Cards */}
+      <InsightsCards />
 
       {/* Members Section */}
       <Card className="p-6">
