@@ -1,16 +1,19 @@
-import { Settings, DollarSign, ChartBar, FileText, Users2 } from "lucide-react";
+import { Settings, DollarSign, ChartBar, FileText, Users2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface SidebarProps {
   onNavigate: (view: string) => void;
 }
 
 const Sidebar = ({ onNavigate }: SidebarProps) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <nav className="w-64 p-8 border-r border-warm-100">
+    <nav className={`relative ${isCollapsed ? 'w-16' : 'w-64'} p-8 border-r border-warm-100 transition-all duration-300`}>
       <div className="space-y-8">
         {/* Logo */}
-        <div className="text-2xl font-bold tracking-tight">
+        <div className={`text-2xl font-bold tracking-tight ${isCollapsed ? 'hidden' : ''}`}>
           BURSE
         </div>
 
@@ -20,33 +23,37 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
             href="#" 
             onClick={() => onNavigate('dashboard')}
             className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+            title={isCollapsed ? "Dashboard" : ""}
           >
             <Settings className="w-5 h-5" />
-            <span>Dashboard</span>
+            {!isCollapsed && <span>Dashboard</span>}
           </a>
           <a 
             href="#" 
             onClick={() => onNavigate('reimbursements')}
             className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+            title={isCollapsed ? "Reimbursements" : ""}
           >
             <DollarSign className="w-5 h-5" />
-            <span>Reimbursements</span>
+            {!isCollapsed && <span>Reimbursements</span>}
           </a>
           <a 
             href="#" 
             onClick={() => onNavigate('analytics')}
             className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+            title={isCollapsed ? "Analytics" : ""}
           >
             <ChartBar className="w-5 h-5" />
-            <span>Analytics</span>
+            {!isCollapsed && <span>Analytics</span>}
           </a>
           <a 
             href="#" 
             onClick={() => onNavigate('invoices')}
             className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
+            title={isCollapsed ? "Invoices" : ""}
           >
             <FileText className="w-5 h-5" />
-            <span>Invoices</span>
+            {!isCollapsed && <span>Invoices</span>}
           </a>
         </div>
       </div>
@@ -54,11 +61,27 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
       {/* User Profile */}
       <div className="absolute bottom-8 flex items-center space-x-3">
         <div className="w-10 h-10 rounded-full bg-warm-200" />
-        <div>
-          <div className="font-medium">Shalim</div>
-          <div className="text-sm text-warm-400">Duke University</div>
-        </div>
+        {!isCollapsed && (
+          <div>
+            <div className="font-medium">Shalim</div>
+            <div className="text-sm text-warm-400">Duke University</div>
+          </div>
+        )}
       </div>
+
+      {/* Toggle Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute -right-3 top-1/2 transform -translate-y-1/2 bg-white border border-warm-100 rounded-full hover:bg-warm-50"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
+        {isCollapsed ? (
+          <ChevronRight className="h-4 w-4" />
+        ) : (
+          <ChevronLeft className="h-4 w-4" />
+        )}
+      </Button>
     </nav>
   );
 };

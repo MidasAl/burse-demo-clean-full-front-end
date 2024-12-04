@@ -18,10 +18,11 @@ export const reimbursementRequests = [
     date: "Today",
     category: "Software",
     note: "Annual subscription renewal for development tools",
-    status: "AI Approved",
+    status: "AI Rejected",
     department: "IT Department",
     aiConfidence: "High" as const,
-    aiRecommendation: "Standard software renewal, matches previous year's expense pattern."
+    aiRecommendation: "License cost exceeds department budget limit of $250",
+    rejectionReason: "Exceeds budget limit"
   },
   {
     title: "Team Building Event",
@@ -42,10 +43,11 @@ export const reimbursementRequests = [
     date: "Yesterday",
     category: "Marketing",
     note: "Printed brochures and banners for upcoming trade show",
-    status: "AI Approved",
+    status: "AI Rejected",
     department: "Marketing Department",
-    aiConfidence: "High" as const,
-    aiRecommendation: "Expense aligns with approved trade show budget."
+    aiConfidence: "Medium" as const,
+    aiRecommendation: "Missing itemized receipt for materials over $500",
+    rejectionReason: "Missing documentation"
   },
   {
     title: "Research Equipment",
