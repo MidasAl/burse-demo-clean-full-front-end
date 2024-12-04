@@ -66,12 +66,12 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
           </a>
           <a 
             href="#" 
-            onClick={() => onNavigate('invoices')}
+            onClick={() => onNavigate('finance-hub')}
             className="flex items-center space-x-3 p-2 rounded-lg text-warm-500 hover:bg-warm-100 transition-colors"
-            title={isCollapsed ? "Invoices" : ""}
+            title={isCollapsed ? "Finance Hub" : ""}
           >
             <FileText className="w-5 h-5" />
-            {!isCollapsed && <span>Invoices</span>}
+            {!isCollapsed && <span>Finance Hub</span>}
           </a>
         </div>
       </div>
