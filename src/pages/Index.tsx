@@ -15,7 +15,7 @@ const Index = () => {
       <main className="flex-1 p-8">
         {currentView === 'analytics' && <AnalyticsView />}
         {currentView === 'reimbursements' && <ReimbursementsView />}
-        {currentView === 'dashboard' && <DashboardView />}
+        {currentView === 'dashboard' && <DashboardView onNavigate={setCurrentView} />}
       </main>
     </div>
   );

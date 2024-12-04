@@ -15,7 +15,11 @@ const members = [
   { id: 5, name: "Aisha Patel", department: "Research & Development", initials: "AP", joinDate: "07/25/2024" },
 ];
 
-const DashboardView = () => {
+interface DashboardViewProps {
+  onNavigate: (view: string) => void;
+}
+
+const DashboardView = ({ onNavigate }: DashboardViewProps) => {
   const [inviteCode, setInviteCode] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -62,6 +66,7 @@ const DashboardView = () => {
           <Button 
             variant="secondary" 
             className="bg-[#494E5B] text-white hover:bg-[#363B47]"
+            onClick={() => onNavigate('reimbursements')}
           >
             View Reimbursement History
           </Button>
