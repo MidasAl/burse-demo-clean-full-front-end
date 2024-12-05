@@ -4,37 +4,8 @@ import { Card } from "@/components/ui/card";
 import { Users2, BrainCircuit, ChevronDown, ChevronUp } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import DepartmentCard from "./DepartmentCard";
+import { EmptyState } from "@/components/ui/empty-state";
 import InviteCodeCard from "./InviteCodeCard";
-import InsightsCards from "./InsightsCards";
-
-// Mock data for members
-const members = [
-  { id: 1, name: "Sarah Johnson", department: "Finance Department", initials: "SJ", joinDate: "11/12/2024" },
-  { id: 2, name: "Michael Chen", department: "IT Department", initials: "MC", joinDate: "10/15/2024" },
-  { id: 3, name: "Emily Rodriguez", department: "HR Department", initials: "ER", joinDate: "09/20/2024" },
-  { id: 4, name: "James Wilson", department: "Marketing Department", initials: "JW", joinDate: "08/30/2024" },
-  { id: 5, name: "Aisha Patel", department: "Research & Development", initials: "AP", joinDate: "07/25/2024" },
-];
-
-// Mock data for AI recommendations
-const aiRecommendations = [
-  {
-    type: "policy",
-    text: "Consider increasing Marketing's travel budget by 10% based on recent trends.",
-    impact: "Could improve team productivity by 15%"
-  },
-  {
-    type: "workflow",
-    text: "Auto-approve reimbursements below $50 to reduce admin workload.",
-    impact: "Estimated 30% reduction in processing time"
-  },
-  {
-    type: "alert",
-    text: "HR Department has 5 pending requests older than 3 days.",
-    impact: "Affecting 3 team members"
-  }
-];
 
 interface DashboardViewProps {
   onNavigate: (view: string) => void;
@@ -64,15 +35,6 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
       });
     }
   };
-
-  // Group members by department
-  const groupedMembers = members.reduce((acc, member) => {
-    if (!acc[member.department]) {
-      acc[member.department] = [];
-    }
-    acc[member.department].push(member);
-    return acc;
-  }, {} as Record<string, typeof members>);
 
   return (
     <div className="space-y-8">
@@ -105,9 +67,6 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
       {/* Invite Code Section */}
       <InviteCodeCard inviteCode={inviteCode} onCopy={copyToClipboard} />
 
-      {/* Insights Cards */}
-      <InsightsCards />
-
       {/* Members Section */}
       <Card className="p-6">
         <Collapsible open={isGroupsOpen} onOpenChange={setIsGroupsOpen}>
@@ -125,28 +84,11 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
           </div>
 
           <CollapsibleContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Object.entries(groupedMembers).map(([department, departmentMembers]) => (
-                <DepartmentCard 
-                  key={department} 
-                  department={department} 
-                  members={departmentMembers} 
-                />
-              ))}
-              
-              {/* Join Another Group Card */}
-              <Card 
-                className="p-6 border-dashed flex items-center justify-center cursor-pointer hover:bg-warm-50 transition-colors"
-                onClick={generateCode}
-              >
-                <div className="text-center space-y-4">
-                  <div className="w-12 h-12 bg-[#494E5B] rounded-full flex items-center justify-center mx-auto text-white">
-                    <Users2 className="w-6 h-6" />
-                  </div>
-                  <p className="text-warm-400">Invite Another Group</p>
-                </div>
-              </Card>
-            </div>
+            <EmptyState
+              title="No Groups Yet"
+              description="Generate an invite code to add your first group."
+              icon={<Users2 className="w-12 h-12 text-warm-400" />}
+            />
           </CollapsibleContent>
         </Collapsible>
       </Card>
@@ -157,14 +99,11 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
           <BrainCircuit className="w-6 h-6 text-warm-500" />
           <h2 className="text-xl font-semibold">Burse AI Suggests</h2>
         </div>
-        <div className="space-y-4">
-          {aiRecommendations.map((rec, index) => (
-            <div key={index} className="p-4 bg-warm-50 rounded-lg">
-              <p className="text-warm-500 font-medium">{rec.text}</p>
-              <p className="text-sm text-warm-400 mt-1">{rec.impact}</p>
-            </div>
-          ))}
-        </div>
+        <EmptyState
+          title="No AI Suggestions Yet"
+          description="AI recommendations will appear here once you start using the system."
+          icon={<BrainCircuit className="w-12 h-12 text-warm-400" />}
+        />
       </Card>
     </div>
   );
