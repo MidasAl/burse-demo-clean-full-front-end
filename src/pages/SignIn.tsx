@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -6,11 +6,12 @@ import { useState } from "react";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Authentication will be implemented later
-    console.log("Sign in attempt", { email, password });
+    // Simply redirect to dashboard - no validation needed
+    navigate("/dashboard");
   };
 
   return (
@@ -78,7 +79,7 @@ const SignIn = () => {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={() => console.log("SSO login")}
+            onClick={() => navigate("/dashboard")}
           >
             Log in with SSO
           </Button>

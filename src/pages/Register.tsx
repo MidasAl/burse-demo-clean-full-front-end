@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -11,13 +11,15 @@ const Register = () => {
     workEmail: "",
     password: "",
     confirmPassword: "",
-    isAdmin: false,
+    isAdmin: true, // Default to true as per requirements
   });
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Registration will be implemented later
-    console.log("Register attempt", formData);
+    // Simply redirect to dashboard - no validation needed
+    navigate("/dashboard");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +154,7 @@ const Register = () => {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={() => console.log("Google sign up")}
+            onClick={() => navigate("/dashboard")}
           >
             Sign Up with Google
           </Button>
