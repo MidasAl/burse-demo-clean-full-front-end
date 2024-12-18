@@ -1,72 +1,21 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/lib/supabase";
-import { User } from '@supabase/supabase-js';
+import { useState } from "react";
 
 const SignIn = () => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
-    try {
-      // Attempt to sign in directly without checking user existence
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (signInError) {
-        throw signInError;
-      }
-
-      if (!data.user) {
-        throw new Error("No user data returned");
-      }
-
-      // Check admin status
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('id', data.user.id)
-        .single();
-
-      if (profileError) {
-        throw profileError;
-      }
-
-      if (!profile?.is_admin) {
-        throw new Error('Access denied. Admin privileges required.');
-      }
-
-      toast({
-        title: "Success",
-        description: "Successfully signed in!",
-      });
-      
-      navigate("/dashboard");
-    } catch (error: any) {
-      console.error("Authentication error:", error);
-      toast({
-        title: "Error",
-        description: error.message || "An error occurred during sign in",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
+    // Authentication will be implemented later
+    console.log("Sign in attempt", { email, password });
   };
 
   return (
     <div className="min-h-screen bg-warm-50">
+      {/* Navigation */}
       <nav className="flex justify-between items-center px-8 py-4">
         <Link to="/" className="text-2xl font-semibold text-warm-500">
           Burse
@@ -85,6 +34,7 @@ const SignIn = () => {
         </div>
       </nav>
 
+      {/* Sign In Form */}
       <div className="max-w-md mx-auto mt-20 px-8">
         <h1 className="text-4xl font-semibold text-center mb-8">Welcome back</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -121,9 +71,16 @@ const SignIn = () => {
           <Button
             type="submit"
             className="w-full bg-black text-white hover:bg-black/90"
-            disabled={loading}
           >
-            {loading ? "Signing in..." : "Sign in"}
+            Log in
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() => console.log("SSO login")}
+          >
+            Log in with SSO
           </Button>
         </form>
         <p className="text-center mt-6 text-sm text-warm-400">
