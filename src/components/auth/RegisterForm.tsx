@@ -77,6 +77,7 @@ export const RegisterForm = () => {
             company_name: formData.companyName,
             is_admin: formData.isAdmin,
           },
+          emailRedirectTo: undefined,
         },
       });
 
@@ -94,11 +95,19 @@ export const RegisterForm = () => {
       }
 
       if (data) {
+        // Sign in immediately after registration
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: formData.workEmail,
+          password: formData.password,
+        });
+
+        if (signInError) throw signInError;
+
         toast({
           title: "Success",
-          description: "Registration successful! You can now sign in.",
+          description: "Registration successful! Redirecting to dashboard...",
         });
-        navigate("/sign-in");
+        navigate("/dashboard");
       }
     } catch (error: any) {
       toast({
@@ -108,7 +117,6 @@ export const RegisterForm = () => {
       });
     } finally {
       setLoading(false);
-      // Reset cooldown after 11 seconds (Supabase's rate limit)
       setTimeout(() => {
         setCooldown(false);
       }, 11000);
