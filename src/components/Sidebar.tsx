@@ -1,6 +1,7 @@
 import { Settings, DollarSign, ChartBar, FileText, Users2, ChevronLeft, ChevronRight, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,13 +19,15 @@ interface SidebarProps {
 const Sidebar = ({ onNavigate }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     toast({
       description: "Successfully logged out",
       duration: 2000,
     });
-    // Add actual logout logic here when authentication is implemented
+    // Redirect to landing page
+    navigate("/");
   };
 
   return (
