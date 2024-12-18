@@ -22,7 +22,28 @@ const SignIn = () => {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        // If the error is about email confirmation, try signing in anyway
+        if (error.message.includes('email_not_confirmed')) {
+          const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+          
+          if (retryError) throw retryError;
+          
+          // If retry succeeds, continue with the sign-in flow
+          if (retryData) {
+            toast({
+              title: "Success",
+              description: "Successfully signed in!",
+            });
+            navigate("/dashboard");
+            return;
+          }
+        }
+        throw error;
+      }
 
       // Check if user is an admin
       const { data: userData } = await supabase

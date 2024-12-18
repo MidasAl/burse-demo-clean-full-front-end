@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabase";
+import { RegisterFormData, handleRegistration } from "@/lib/auth";
 
 interface FormData {
   name: string;
@@ -68,7 +69,7 @@ export const RegisterForm = () => {
     setCooldown(true);
     
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.workEmail,
         password: formData.password,
         options: {
@@ -81,34 +82,21 @@ export const RegisterForm = () => {
         },
       });
 
-      if (error) {
-        if (error.message.includes('rate_limit')) {
-          toast({
-            title: "Too many attempts",
-            description: "Please wait a few seconds before trying again",
-            variant: "destructive",
-          });
-        } else {
-          throw error;
-        }
-        return;
-      }
+      if (signUpError) throw signUpError;
 
-      if (data) {
-        // Sign in immediately after registration
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email: formData.workEmail,
-          password: formData.password,
-        });
+      // Immediately sign in after registration
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.workEmail,
+        password: formData.password,
+      });
 
-        if (signInError) throw signInError;
+      if (signInError) throw signInError;
 
-        toast({
-          title: "Success",
-          description: "Registration successful! Redirecting to dashboard...",
-        });
-        navigate("/dashboard");
-      }
+      toast({
+        title: "Success",
+        description: "Registration successful! Redirecting to dashboard...",
+      });
+      navigate("/dashboard");
     } catch (error: any) {
       toast({
         title: "Error",
