@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabase";
-import { RegisterFormData, handleRegistration } from "@/lib/auth";
 
 interface FormData {
   name: string;
@@ -69,6 +68,7 @@ export const RegisterForm = () => {
     setCooldown(true);
     
     try {
+      // First, attempt to sign up
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.workEmail,
         password: formData.password,
@@ -84,14 +84,20 @@ export const RegisterForm = () => {
 
       if (signUpError) throw signUpError;
 
-      // Immediately sign in after registration
+      // Wait a moment for the registration to process
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Attempt to sign in immediately
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.workEmail,
         password: formData.password,
       });
 
-      if (signInError) throw signInError;
+      if (signInError && !signInError.message.includes('email_not_confirmed')) {
+        throw signInError;
+      }
 
+      // Even if we get an email_not_confirmed error, proceed with navigation
       toast({
         title: "Success",
         description: "Registration successful! Redirecting to dashboard...",
