@@ -1,4 +1,4 @@
-import { DollarSign, FileText, Settings, ListTodo } from "lucide-react";
+import { DollarSign, FileText, Settings } from "lucide-react";
 
 interface MenuItemsProps {
   onNavigate: (view: string) => void;
@@ -26,9 +26,6 @@ const MenuItems = ({ onNavigate, isCollapsed }: MenuItemsProps) => {
         <DollarSign className="w-5 h-5" />
         {!isCollapsed && <span>Reimbursements</span>}
       </a>
-      <div className="pt-2">
-        <ListTodo className="w-5 h-5 mx-2 mb-2 text-warm-400" />
-      </div>
       <a 
         href="#" 
         onClick={() => onNavigate('finance-hub')}
