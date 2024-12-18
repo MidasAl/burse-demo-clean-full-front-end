@@ -1,21 +1,58 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/supabase";
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Authentication will be implemented later
-    console.log("Sign in attempt", { email, password });
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      // Check if user is an admin
+      const { data: userData } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', data.user.id)
+        .single();
+
+      if (!userData?.is_admin) {
+        throw new Error('Access denied. Admin privileges required.');
+      }
+
+      toast({
+        title: "Success",
+        description: "Successfully signed in!",
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-warm-50">
-      {/* Navigation */}
       <nav className="flex justify-between items-center px-8 py-4">
         <Link to="/" className="text-2xl font-semibold text-warm-500">
           Burse
@@ -34,7 +71,6 @@ const SignIn = () => {
         </div>
       </nav>
 
-      {/* Sign In Form */}
       <div className="max-w-md mx-auto mt-20 px-8">
         <h1 className="text-4xl font-semibold text-center mb-8">Welcome back</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -71,16 +107,9 @@ const SignIn = () => {
           <Button
             type="submit"
             className="w-full bg-black text-white hover:bg-black/90"
+            disabled={loading}
           >
-            Log in
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={() => console.log("SSO login")}
-          >
-            Log in with SSO
+            {loading ? "Signing in..." : "Sign in"}
           </Button>
         </form>
         <p className="text-center mt-6 text-sm text-warm-400">

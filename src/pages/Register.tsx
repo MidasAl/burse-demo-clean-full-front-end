@@ -1,10 +1,14 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/lib/supabase";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -13,21 +17,70 @@ const Register = () => {
     confirmPassword: "",
     isAdmin: false,
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Registration will be implemented later
-    console.log("Register attempt", formData);
-  };
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!formData.isAdmin) {
+      toast({
+        title: "Error",
+        description: "Only admin registration is allowed at this time",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.workEmail,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name,
+            company_name: formData.companyName,
+            is_admin: formData.isAdmin,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data) {
+        toast({
+          title: "Success",
+          description: "Registration successful! You can now sign in.",
+        });
+        navigate("/sign-in");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-warm-50">
-      {/* Navigation */}
       <nav className="flex justify-between items-center px-8 py-4">
         <Link to="/" className="text-2xl font-semibold text-warm-500">
           Burse
@@ -46,7 +99,6 @@ const Register = () => {
         </div>
       </nav>
 
-      {/* Register Form */}
       <div className="max-w-md mx-auto mt-12 px-8">
         <h1 className="text-4xl font-semibold text-center mb-4">Get Started Today</h1>
         <p className="text-center text-warm-400 mb-8">
@@ -134,27 +186,15 @@ const Register = () => {
               htmlFor="isAdmin"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Yes, I want to register as an admin.
+              Yes, I want to register as an admin
             </label>
           </div>
-          <Button type="submit" className="w-full bg-[#4F46E5] hover:bg-[#4338CA]">
-            Register
-          </Button>
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-warm-50 px-2 text-warm-400">or</span>
-            </div>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={() => console.log("Google sign up")}
+          <Button 
+            type="submit" 
+            className="w-full bg-[#4F46E5] hover:bg-[#4338CA]"
+            disabled={loading}
           >
-            Sign Up with Google
+            {loading ? "Registering..." : "Register"}
           </Button>
         </form>
         <p className="text-center mt-6 text-sm text-warm-400">
