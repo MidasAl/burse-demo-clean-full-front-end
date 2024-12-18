@@ -1,23 +1,10 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Download, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { EmptyState } from "@/components/ui/empty-state";
-import { EarlyAccessModal } from "@/components/early-access/EarlyAccessModal";
 
 const ReimbursementsView = () => {
-  const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowModal(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="max-w-5xl mx-auto">
       {/* Header */}
@@ -53,8 +40,6 @@ const ReimbursementsView = () => {
         description="Your reimbursement requests will appear here once they're submitted."
         icon={<Receipt className="w-12 h-12 text-warm-400" />}
       />
-
-      <EarlyAccessModal isOpen={showModal} onOpenChange={setShowModal} />
     </div>
   );
 };
