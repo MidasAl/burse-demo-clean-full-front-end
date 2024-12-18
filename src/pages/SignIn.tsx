@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabase";
+import { User } from '@supabase/supabase-js';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -17,20 +18,7 @@ const SignIn = () => {
     setLoading(true);
 
     try {
-      // First, check if the user exists and get their profile
-      const { data: { users }, error: getUserError } = await supabase.auth.admin.listUsers();
-      
-      if (getUserError) {
-        throw getUserError;
-      }
-
-      const user = users?.find(u => u.email === email);
-      
-      if (!user) {
-        throw new Error("Invalid credentials");
-      }
-
-      // Then attempt to sign in
+      // Attempt to sign in directly without checking user existence
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -38,6 +26,10 @@ const SignIn = () => {
 
       if (signInError) {
         throw signInError;
+      }
+
+      if (!data.user) {
+        throw new Error("No user data returned");
       }
 
       // Check admin status
