@@ -27,6 +27,7 @@ export const RegisterForm = () => {
     isAdmin: false,
   });
   const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,6 +37,15 @@ export const RegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (cooldown) {
+      toast({
+        title: "Please wait",
+        description: "You can try registering again in a few seconds",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast({
         title: "Error",
@@ -55,6 +65,8 @@ export const RegisterForm = () => {
     }
 
     setLoading(true);
+    setCooldown(true);
+    
     try {
       const { data, error } = await supabase.auth.signUp({
         email: formData.workEmail,
@@ -68,23 +80,20 @@ export const RegisterForm = () => {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes('rate_limit')) {
+          toast({
+            title: "Too many attempts",
+            description: "Please wait a few seconds before trying again",
+            variant: "destructive",
+          });
+        } else {
+          throw error;
+        }
+        return;
+      }
 
       if (data) {
-        // Create a profile record with is_admin flag
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: data.user?.id,
-              name: formData.name,
-              company_name: formData.companyName,
-              is_admin: true,
-            }
-          ]);
-
-        if (profileError) throw profileError;
-
         toast({
           title: "Success",
           description: "Registration successful! You can now sign in.",
@@ -99,6 +108,10 @@ export const RegisterForm = () => {
       });
     } finally {
       setLoading(false);
+      // Reset cooldown after 11 seconds (Supabase's rate limit)
+      setTimeout(() => {
+        setCooldown(false);
+      }, 11000);
     }
   };
 
@@ -191,9 +204,9 @@ export const RegisterForm = () => {
       <Button 
         type="submit" 
         className="w-full bg-[#4F46E5] hover:bg-[#4338CA]"
-        disabled={loading}
+        disabled={loading || cooldown}
       >
-        {loading ? "Registering..." : "Register"}
+        {loading ? "Registering..." : cooldown ? "Please wait..." : "Register"}
       </Button>
     </form>
   );
