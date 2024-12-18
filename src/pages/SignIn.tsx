@@ -17,33 +17,41 @@ const SignIn = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      // First, check if the user exists and get their profile
+      const { data: { users }, error: getUserError } = await supabase.auth.admin.listUsers();
+      
+      if (getUserError) {
+        throw getUserError;
+      }
+
+      const user = users?.find(u => u.email === email);
+      
+      if (!user) {
+        throw new Error("Invalid credentials");
+      }
+
+      // Then attempt to sign in
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
-        console.error("Sign in error:", error);
-        throw error;
+      if (signInError) {
+        throw signInError;
       }
 
-      if (!data.user) {
-        throw new Error("No user data returned");
-      }
-
-      // Check if user is an admin
-      const { data: userData, error: profileError } = await supabase
+      // Check admin status
+      const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('is_admin')
         .eq('id', data.user.id)
         .single();
 
       if (profileError) {
-        console.error("Profile fetch error:", profileError);
         throw profileError;
       }
 
-      if (!userData?.is_admin) {
+      if (!profile?.is_admin) {
         throw new Error('Access denied. Admin privileges required.');
       }
 
@@ -51,12 +59,13 @@ const SignIn = () => {
         title: "Success",
         description: "Successfully signed in!",
       });
+      
       navigate("/dashboard");
     } catch (error: any) {
       console.error("Authentication error:", error);
       toast({
         title: "Error",
-        description: error.message,
+        description: error.message || "An error occurred during sign in",
         variant: "destructive",
       });
     } finally {
