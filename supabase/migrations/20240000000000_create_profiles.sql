@@ -56,5 +56,6 @@ create trigger on_auth_user_created
   for each row execute procedure public.handle_new_user();
 
 -- Disable email confirmation requirement
-update auth.config
-set confirm_email_on_signup = false;
+alter table auth.users alter column email_confirmed_at set default now();
+update auth.users set email_confirmed_at = now() where email_confirmed_at is null;
+update auth.config set confirm_email_on_signup = false;

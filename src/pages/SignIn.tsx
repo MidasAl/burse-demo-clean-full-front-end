@@ -22,14 +22,26 @@ const SignIn = () => {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Sign in error:", error);
+        throw error;
+      }
+
+      if (!data.user) {
+        throw new Error("No user data returned");
+      }
 
       // Check if user is an admin
-      const { data: userData } = await supabase
+      const { data: userData, error: profileError } = await supabase
         .from('profiles')
         .select('is_admin')
         .eq('id', data.user.id)
         .single();
+
+      if (profileError) {
+        console.error("Profile fetch error:", profileError);
+        throw profileError;
+      }
 
       if (!userData?.is_admin) {
         throw new Error('Access denied. Admin privileges required.');
@@ -41,6 +53,7 @@ const SignIn = () => {
       });
       navigate("/dashboard");
     } catch (error: any) {
+      console.error("Authentication error:", error);
       toast({
         title: "Error",
         description: error.message,
