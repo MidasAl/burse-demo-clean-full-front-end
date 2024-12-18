@@ -83,7 +83,7 @@ const Landing = () => {
           </p>
           <div className="flex justify-center items-center gap-8 flex-wrap">
             <img 
-              src="/lovable-uploads/3c5b83bb-b288-4d09-93cf-3585e19a23ae.png" 
+              src="/lovable-uploads/af397d13-920f-4c43-b9d7-cecd92e3d707.png" 
               alt="Duke University Logo" 
               className="h-16 object-contain"
             />
