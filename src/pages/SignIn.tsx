@@ -22,7 +22,17 @@ const SignIn = () => {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes('email_not_confirmed')) {
+          toast({
+            title: "Email not verified",
+            description: "Please check your email and click the verification link before signing in.",
+            variant: "destructive",
+          });
+          return;
+        }
+        throw error;
+      }
 
       // Check if user is an admin
       const { data: userData } = await supabase
