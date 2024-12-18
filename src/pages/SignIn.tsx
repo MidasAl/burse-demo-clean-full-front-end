@@ -2,50 +2,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
-import { useToast } from "@/components/ui/use-toast";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        toast({
-          variant: "destructive",
-          description: error.message,
-        });
-        return;
-      }
-
-      toast({
-        description: "Successfully signed in!",
-      });
-      navigate("/dashboard");
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        description: "An unexpected error occurred",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    // Simply redirect to dashboard - no validation needed
+    navigate("/dashboard");
   };
 
   return (
     <div className="min-h-screen bg-warm-50">
+      {/* Navigation */}
       <nav className="flex justify-between items-center px-8 py-4">
         <Link to="/" className="text-2xl font-semibold text-warm-500">
           Burse
@@ -64,6 +35,7 @@ const SignIn = () => {
         </div>
       </nav>
 
+      {/* Sign In Form */}
       <div className="max-w-md mx-auto mt-20 px-8">
         <h1 className="text-4xl font-semibold text-center mb-8">Welcome back</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -100,25 +72,16 @@ const SignIn = () => {
           <Button
             type="submit"
             className="w-full bg-black text-white hover:bg-black/90"
-            disabled={isLoading}
           >
-            {isLoading ? "Signing in..." : "Sign in"}
+            Log in
           </Button>
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-warm-50 px-2 text-warm-400">or</span>
-            </div>
-          </div>
           <Button
             type="button"
             variant="outline"
             className="w-full"
             onClick={() => navigate("/dashboard")}
           >
-            Continue with Google
+            Log in with SSO
           </Button>
         </form>
         <p className="text-center mt-6 text-sm text-warm-400">

@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/lib/supabase";
 
 interface SidebarProps {
   onNavigate: (view: string) => void;
@@ -22,23 +21,13 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      
-      toast({
-        description: "Successfully logged out",
-        duration: 2000,
-      });
-      navigate("/");
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        description: "Error logging out",
-        duration: 2000,
-      });
-    }
+  const handleLogout = () => {
+    toast({
+      description: "Successfully logged out",
+      duration: 2000,
+    });
+    // Redirect to landing page
+    navigate("/");
   };
 
   return (
