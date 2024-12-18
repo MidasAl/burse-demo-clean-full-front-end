@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/ui/empty-state";
 import { EarlyAccessModal } from "@/components/early-access/EarlyAccessModal";
-import { Receipt, Plug, FileText } from "lucide-react";
+import { Receipt, Plug, FileText, ListTodo } from "lucide-react";
+import AnalyticsView from "../analytics/AnalyticsView";
 
 export const FinanceHubView = () => {
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,10 @@ export const FinanceHubView = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight">Finance Hub</h1>
+        <div className="flex items-center space-x-3">
+          <ListTodo className="w-8 h-8 text-warm-400" />
+          <h1 className="text-3xl font-bold tracking-tight">Finance Hub</h1>
+        </div>
         <p className="text-warm-400">Manage your invoices, accounting tools, and compliance seamlessly.</p>
       </div>
 
@@ -27,6 +31,7 @@ export const FinanceHubView = () => {
           <TabsTrigger value="invoices">Invoices</TabsTrigger>
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
           <TabsTrigger value="audit-logs">Audit Logs</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
         </TabsList>
         <TabsContent value="invoices">
           <EmptyState
@@ -48,6 +53,9 @@ export const FinanceHubView = () => {
             description="Your audit trail will appear here once you start using the system."
             icon={<FileText className="w-12 h-12 text-warm-400" />}
           />
+        </TabsContent>
+        <TabsContent value="analytics">
+          <AnalyticsView />
         </TabsContent>
       </Tabs>
 
