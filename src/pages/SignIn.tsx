@@ -17,24 +17,18 @@ const SignIn = () => {
     setLoading(true);
 
     try {
-      // Attempt to sign in directly without checking email confirmation
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
-        // If we get any error other than email_not_confirmed, throw it
-        if (!error.message.includes('email_not_confirmed')) {
-          throw error;
-        }
-      }
+      if (error) throw error;
 
       // Check if user is an admin
       const { data: userData } = await supabase
         .from('profiles')
         .select('is_admin')
-        .eq('id', data?.user?.id)
+        .eq('id', data.user.id)
         .single();
 
       if (!userData?.is_admin) {

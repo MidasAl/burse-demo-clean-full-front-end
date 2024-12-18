@@ -68,7 +68,6 @@ export const RegisterForm = () => {
     setCooldown(true);
     
     try {
-      // First, attempt to sign up
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.workEmail,
         password: formData.password,
@@ -84,20 +83,14 @@ export const RegisterForm = () => {
 
       if (signUpError) throw signUpError;
 
-      // Wait a moment for the registration to process
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Attempt to sign in immediately
+      // Sign in immediately after registration
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.workEmail,
         password: formData.password,
       });
 
-      if (signInError && !signInError.message.includes('email_not_confirmed')) {
-        throw signInError;
-      }
+      if (signInError) throw signInError;
 
-      // Even if we get an email_not_confirmed error, proceed with navigation
       toast({
         title: "Success",
         description: "Registration successful! Redirecting to dashboard...",
