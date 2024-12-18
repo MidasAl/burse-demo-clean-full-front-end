@@ -60,7 +60,9 @@ const Landing = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <feature.icon className="w-10 h-10 text-warm-500 mb-4" />
+              <div className="w-10 h-10 text-warm-500 mb-4">
+                <feature.icon />
+              </div>
               <h3 className="text-xl font-semibold text-warm-500 mb-2">
                 {feature.title}
               </h3>
@@ -119,7 +121,7 @@ const Landing = () => {
 const features = [
   {
     icon: () => (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 text-warm-500" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="4" y="2" width="16" height="20" rx="2" />
         <line x1="8" y1="8" x2="16" y2="8" />
         <line x1="8" y1="12" x2="16" y2="12" />
@@ -131,7 +133,7 @@ const features = [
   },
   {
     icon: () => (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 text-warm-500" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
       </svg>
     ),
@@ -140,7 +142,7 @@ const features = [
   },
   {
     icon: () => (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 text-warm-500" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75" />
@@ -151,7 +153,7 @@ const features = [
   },
   {
     icon: () => (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 text-warm-500" fill="none" stroke="currentColor" strokeWidth="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
       </svg>
     ),
