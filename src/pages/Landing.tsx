@@ -87,8 +87,8 @@ const Landing = () => {
               alt="Duke University Logo" 
               className="h-16 object-contain"
             />
-            <div className="w-16 h-16 bg-[#57068c] flex items-center justify-center rounded">
-              <span className="text-white text-2xl font-bold">NYU</span>
+            <div className="w-16 h-16 bg-[#012169] flex items-center justify-center rounded">
+              <span className="text-white text-lg font-bold">Duke</span>
             </div>
           </div>
         </div>
