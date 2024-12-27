@@ -90,6 +90,9 @@ const Landing = () => {
             <div className="w-16 h-16 bg-[#012169] flex items-center justify-center rounded">
               <span className="text-white text-lg font-bold">Duke</span>
             </div>
+            <div className="w-16 h-16 bg-[#57068c] flex items-center justify-center rounded">
+              <span className="text-white text-lg font-bold">NYU</span>
+            </div>
           </div>
         </div>
       </section>
