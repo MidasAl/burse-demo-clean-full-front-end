@@ -1,6 +1,7 @@
 import DashboardView from "@/components/dashboard/DashboardView";
 import Sidebar from "@/components/Sidebar";
 import { useState } from "react";
+import ReimbursementsView from "@/components/reimbursements/ReimbursementsView";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -8,7 +9,7 @@ const Index = () => {
   const renderContent = () => {
     switch (currentView) {
       case "reimbursements":
-        return <div>Reimbursements View</div>;
+        return <ReimbursementsView />;
       case "finance-hub":
         return <div>Finance Hub View</div>;
       default:
