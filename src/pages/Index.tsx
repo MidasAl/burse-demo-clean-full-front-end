@@ -1,14 +1,7 @@
-import { Routes, Route } from "react-router-dom";
-import { GroupsView } from "@/components/groups/GroupsView";
-import { ReimbursementFlow } from "@/components/reimbursements/ReimbursementFlow";
+import DashboardView from "@/components/dashboard/DashboardView";
 
 const Index = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<GroupsView />} />
-      <Route path="/reimbursement" element={<ReimbursementFlow />} />
-    </Routes>
-  );
+  return <DashboardView onNavigate={(view) => console.log('Navigating to:', view)} />;
 };
 
 export default Index;
