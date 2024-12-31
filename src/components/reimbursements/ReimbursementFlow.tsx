@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -16,6 +17,7 @@ export const ReimbursementFlow = () => {
   const [details, setDetails] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -45,7 +47,7 @@ export const ReimbursementFlow = () => {
           </Select>
         </div>
         <div className="flex justify-between pt-6">
-          <Button variant="outline" onClick={() => window.history.back()}>Back</Button>
+          <Button variant="outline" onClick={() => navigate("/user-dashboard")}>Back</Button>
           <Button 
             disabled={!type} 
             onClick={() => setStep("upload-receipt")}
@@ -124,14 +126,13 @@ export const ReimbursementFlow = () => {
           </div>
           <div className="bg-warm-50 p-4 rounded-lg">
             <p className="text-sm text-warm-600">
-              The reimbursement request for legitimate expenses incurred for the Fall Community
-              Welcome Event at Duke University. The total amount requested is ${amount}, which aligns with
-              the detailed breakdown provided for community event supplies and food & beverage.
+              Your reimbursement request for {type} has been approved.
+              The total amount of ${amount} will be processed according to the provided details.
             </p>
           </div>
         </div>
         <div className="flex justify-between pt-6">
-          <Button variant="outline" onClick={() => window.history.back()}>Return to Groups</Button>
+          <Button variant="outline" onClick={() => navigate("/user-dashboard")}>Return to Groups</Button>
           <Button onClick={() => setStep("select-type")}>Submit Another</Button>
         </div>
       </CardContent>
