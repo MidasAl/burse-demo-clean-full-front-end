@@ -1,24 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { EmptyState } from "@/components/ui/empty-state";
 import JoinGroupModal from "./JoinGroupModal";
 import GroupCard from "./GroupCard";
 import { Group } from "./types";
 
-interface GroupsViewProps {
-  onNavigate: (view: string) => void;
-}
-
-const GroupsView = ({ onNavigate }: GroupsViewProps) => {
+export const GroupsView = () => {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const [groups, setGroups] = useState<Group[]>([]);
   const { toast } = useToast();
 
-  // Simulated group joining logic
   const handleJoinGroup = (code: string) => {
-    // This is a mock implementation. In a real app, this would validate against a backend
     if (code.toLowerCase() !== "duke2024") {
       toast({
         title: "Invalid Code",
@@ -71,10 +65,7 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
                 </div>
               }
             >
-              <Button
-                onClick={() => setIsJoinModalOpen(true)}
-                className="mt-4"
-              >
+              <Button onClick={() => setIsJoinModalOpen(true)} className="mt-4">
                 Join a Group
               </Button>
             </EmptyState>
@@ -85,7 +76,12 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
               <GroupCard
                 key={group.id}
                 group={group}
-                onSubmitReimbursement={() => onNavigate("reimbursements")}
+                onSubmitReimbursement={() => {
+                  toast({
+                    title: "Coming Soon",
+                    description: "Reimbursement submission will be available soon.",
+                  });
+                }}
               />
             ))}
             <Card className="flex items-center justify-center p-6 border-dashed">
@@ -109,5 +105,3 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
     </div>
   );
 };
-
-export default GroupsView;
