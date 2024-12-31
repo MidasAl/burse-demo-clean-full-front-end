@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import ReimbursementsView from "@/components/reimbursements/ReimbursementsView";
 import DashboardView from "@/components/dashboard/DashboardView";
 import { FinanceHubView } from "@/components/finance-hub/FinanceHubView";
+import GroupsView from "@/components/groups/GroupsView";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -16,6 +17,7 @@ const Index = () => {
         {currentView === 'reimbursements' && <ReimbursementsView />}
         {currentView === 'dashboard' && <DashboardView onNavigate={setCurrentView} />}
         {currentView === 'finance-hub' && <FinanceHubView />}
+        {currentView === 'groups' && <GroupsView onNavigate={setCurrentView} />}
       </main>
     </div>
   );
