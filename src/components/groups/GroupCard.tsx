@@ -15,7 +15,7 @@ const GroupCard = ({ group, onSubmitReimbursement }: GroupCardProps) => {
   });
 
   return (
-    <Card className="w-full card-hover">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{group.name}</CardTitle>
         <CardDescription>Active since {formattedDate}</CardDescription>

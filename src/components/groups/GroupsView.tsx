@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { EmptyState } from "@/components/ui/empty-state";
 import JoinGroupModal from "./JoinGroupModal";
 import GroupCard from "./GroupCard";
 import { Group } from "./types";
@@ -19,15 +18,6 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
   // Simulated group joining logic
   const handleJoinGroup = (code: string) => {
     // This is a mock implementation. In a real app, this would validate against a backend
-    if (code.toLowerCase() !== "duke2024") {
-      toast({
-        title: "Invalid Code",
-        description: "Please check your invite code and try again.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     const mockGroup: Group = {
       id: Date.now().toString(),
       name: "Duke Finance",
@@ -49,35 +39,13 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
 
       <div className="grid gap-6 md:grid-cols-2">
         {groups.length === 0 ? (
-          <Card className="col-span-full">
-            <EmptyState
-              title="No groups joined yet"
-              description="Join a group to start submitting reimbursements"
-              icon={
-                <div className="w-12 h-12 rounded-full bg-warm-100 flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-warm-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                    />
-                  </svg>
-                </div>
-              }
-            >
-              <Button
-                onClick={() => setIsJoinModalOpen(true)}
-                className="mt-4"
-              >
+          <Card className="col-span-full p-6">
+            <CardContent className="text-center space-y-4">
+              <p className="text-muted-foreground">No groups joined yet</p>
+              <Button onClick={() => setIsJoinModalOpen(true)}>
                 Join a Group
               </Button>
-            </EmptyState>
+            </CardContent>
           </Card>
         ) : (
           <>

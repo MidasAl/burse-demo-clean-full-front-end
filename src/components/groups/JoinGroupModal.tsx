@@ -25,7 +25,6 @@ const JoinGroupModal = ({ isOpen, onClose, onJoin }: JoinGroupModalProps) => {
       return;
     }
     onJoin(code);
-    setCode(""); // Reset the input after submission
   };
 
   return (
@@ -42,7 +41,6 @@ const JoinGroupModal = ({ isOpen, onClose, onJoin }: JoinGroupModalProps) => {
             placeholder="Enter invite code"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            className="text-base md:text-sm"
           />
           <div className="flex justify-end gap-3">
             <Button variant="outline" type="button" onClick={onClose}>
