@@ -1,69 +1,133 @@
 # Welcome to your Lovable project
 
-## Project info
+## Overview
+This platform enables administrators to manage groups and reimbursements, while allowing users to join groups and submit reimbursement requests. The system currently uses dummy data for frontend testing purposes.
 
-**URL**: https://lovable.dev/projects/c797b115-209a-425d-ba32-0ed39092e043
+### User Types
+- **Administrators**: Can create groups, generate invite codes, and manage reimbursements
+- **Users**: Can join groups using invite codes and submit reimbursement requests
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+### Admin Features
+- **Group Management**: Create and manage groups
+- **Invite Code Generation**: Generate unique codes for group invitations
+- **Reimbursement Management**: Process and approve reimbursement requests
+- **Analytics Dashboard**: View group activity and reimbursement statistics
 
-**Use Lovable**
+### User Features
+- **Group Joining**: Join groups using invite codes
+- **Reimbursement Submission**: Submit requests with the following steps:
+  1. Select reimbursement type (Uber, Hotel, Flight, Food)
+  2. Upload receipt and enter details
+  3. View submission status and decision
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c797b115-209a-425d-ba32-0ed39092e043) and start prompting.
+## User Flows
 
-Changes made via Lovable will be committed automatically to this repo.
+### Admin Flow
+1. Access the admin dashboard
+2. Generate an invite code for a new group
+3. Share the code with intended group members
+4. Monitor and process reimbursement requests
 
-**Use your preferred IDE**
+### User Flow
+1. Navigate to "Your Groups" screen
+2. Click "Join a Group" and enter invite code
+3. Access group details after successful join
+4. Submit reimbursement requests through the group interface
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Testing with Dummy Data
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Available Test Invite Codes
+```
+GROUP123 -> Duke Finance
+DUKE2024 -> NYU Admin Group
+NYU567   -> Venture Capital Team
+```
 
-Follow these steps:
+### Testing Steps
+1. Use any of the above codes in the "Join a Group" modal
+2. Observe the group details display
+3. Test the reimbursement flow by clicking "Submit Reimbursements"
 
+## Project Structure
+
+```plaintext
+src/
+├── components/
+│   ├── dashboard/
+│   │   ├── DashboardView.tsx
+│   │   └── InviteCodeCard.tsx
+│   ├── groups/
+│   │   ├── GroupCard.tsx
+│   │   ├── GroupsView.tsx
+│   │   ├── JoinGroupModal.tsx
+│   │   └── types.ts
+│   ├── reimbursements/
+│   │   ├── ReimbursementFlow.tsx
+│   │   └── types.ts
+│   └── Sidebar.tsx
+├── pages/
+│   ├── Index.tsx
+│   ├── Landing.tsx
+│   ├── Register.tsx
+│   ├── SignIn.tsx
+│   └── UserDashboard.tsx
+└── App.tsx
+```
+
+## Technical Details
+
+### Frontend Stack
+- React with TypeScript
+- Vite for build tooling
+- Tailwind CSS for styling
+- shadcn/ui for UI components
+- React Router for navigation
+- Tanstack Query for data management
+
+### Key Components
+- **GroupsView**: Main interface for users to join and view groups
+- **ReimbursementFlow**: Multi-step form for submitting reimbursements
+- **DashboardView**: Admin interface for managing groups and codes
+
+## Local Development
+
+### Prerequisites
+- Node.js & npm - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+### Setup Instructions
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
+# Install dependencies
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+You can deploy this project in two ways:
+1. Using Lovable: Open [Lovable](https://lovable.dev/projects/c797b115-209a-425d-ba32-0ed39092e043) and click on Share -> Publish
+2. Custom Domain: Deploy to Netlify following our [custom domain guide](https://docs.lovable.dev/tips-tricks/custom-domain/)
 
-**Use GitHub Codespaces**
+## Future Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Planned Features
+- Backend integration for real invite code validation
+- Email notifications for reimbursement status updates
+- Advanced analytics for administrators
+- Multi-currency support for international reimbursements
 
-## What technologies are used for this project?
+## Support
 
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/c797b115-209a-425d-ba32-0ed39092e043) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+For questions or issues:
+- Visit our [documentation](https://docs.lovable.dev/)
+- Join our [Discord community](https://discord.com/channels/1119885301872070706/1280461670979993613)
+- Watch our [tutorial videos](https://www.youtube.com/watch?v=9KHLTZaJcR8&list=PLbVHz4urQBZkJiAWdG8HWoJTdgEysigIO)
