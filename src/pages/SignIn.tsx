@@ -2,16 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simply redirect to dashboard - no validation needed
-    navigate("/dashboard");
+    // Redirect based on admin status
+    navigate(isAdmin ? "/dashboard" : "/user-dashboard");
   };
 
   return (
@@ -69,6 +72,14 @@ const SignIn = () => {
               Forgot your password?
             </Link>
           </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="isAdmin"
+              checked={isAdmin}
+              onCheckedChange={(checked) => setIsAdmin(checked as boolean)}
+            />
+            <Label htmlFor="isAdmin">Sign in as Administrator</Label>
+          </div>
           <Button
             type="submit"
             className="w-full bg-black text-white hover:bg-black/90"
@@ -79,7 +90,7 @@ const SignIn = () => {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate(isAdmin ? "/dashboard" : "/user-dashboard")}
           >
             Log in with SSO
           </Button>

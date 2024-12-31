@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,15 +12,15 @@ const Register = () => {
     workEmail: "",
     password: "",
     confirmPassword: "",
-    isAdmin: true, // Default to true as per requirements
+    isAdmin: false,
   });
 
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simply redirect to dashboard - no validation needed
-    navigate("/dashboard");
+    // Redirect based on admin status
+    navigate(formData.isAdmin ? "/dashboard" : "/user-dashboard");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,12 +133,7 @@ const Register = () => {
                 setFormData((prev) => ({ ...prev, isAdmin: checked as boolean }))
               }
             />
-            <label
-              htmlFor="isAdmin"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Yes, I want to register as an admin.
-            </label>
+            <Label htmlFor="isAdmin">Yes, I want to register as an administrator</Label>
           </div>
           <Button type="submit" className="w-full bg-[#4F46E5] hover:bg-[#4338CA]">
             Register
@@ -154,7 +150,7 @@ const Register = () => {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate(formData.isAdmin ? "/dashboard" : "/user-dashboard")}
           >
             Sign Up with Google
           </Button>
