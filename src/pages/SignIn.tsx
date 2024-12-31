@@ -10,7 +10,7 @@ const SignIn = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, we'll consider all users as non-admin and redirect them to the groups view
+    // Simply redirect to dashboard - no validation needed
     navigate("/dashboard");
   };
 
