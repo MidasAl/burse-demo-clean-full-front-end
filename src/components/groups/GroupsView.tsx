@@ -64,11 +64,12 @@ export const GroupsView = () => {
                   </svg>
                 </div>
               }
-            >
-              <Button onClick={() => setIsJoinModalOpen(true)} className="mt-4">
+            />
+            <div className="flex justify-center p-6 pt-0">
+              <Button onClick={() => setIsJoinModalOpen(true)}>
                 Join a Group
               </Button>
-            </EmptyState>
+            </div>
           </Card>
         ) : (
           <>
