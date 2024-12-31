@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Users2 } from "lucide-react";
 import JoinGroupModal from "./JoinGroupModal";
 import GroupCard from "./GroupCard";
 import { Group } from "./types";
@@ -18,19 +20,27 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
   // Simulated group joining logic
   const handleJoinGroup = (code: string) => {
     // This is a mock implementation. In a real app, this would validate against a backend
-    const mockGroup: Group = {
-      id: Date.now().toString(),
-      name: "Duke Finance",
-      createdAt: new Date().toISOString(),
-      inviteCode: code,
-    };
+    if (code.toLowerCase() === "duke2024") {
+      const mockGroup: Group = {
+        id: Date.now().toString(),
+        name: "Duke Finance",
+        createdAt: new Date().toISOString(),
+        inviteCode: code,
+      };
 
-    setGroups([...groups, mockGroup]);
-    setIsJoinModalOpen(false);
-    toast({
-      title: "Success!",
-      description: "You've successfully joined the group.",
-    });
+      setGroups([...groups, mockGroup]);
+      setIsJoinModalOpen(false);
+      toast({
+        title: "Success!",
+        description: "You've successfully joined the group.",
+      });
+    } else {
+      toast({
+        title: "Invalid Code",
+        description: "Please check your invite code and try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -40,8 +50,12 @@ const GroupsView = ({ onNavigate }: GroupsViewProps) => {
       <div className="grid gap-6 md:grid-cols-2">
         {groups.length === 0 ? (
           <Card className="col-span-full p-6">
-            <CardContent className="text-center space-y-4">
-              <p className="text-muted-foreground">No groups joined yet</p>
+            <CardContent className="flex flex-col items-center justify-center space-y-4 text-center">
+              <EmptyState
+                title="No Groups Yet"
+                description="Join your first group by entering an invite code"
+                icon={<Users2 className="w-12 h-12 text-warm-400" />}
+              />
               <Button onClick={() => setIsJoinModalOpen(true)}>
                 Join a Group
               </Button>

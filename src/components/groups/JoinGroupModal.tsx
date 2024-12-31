@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 
 interface JoinGroupModalProps {
   isOpen: boolean;
@@ -12,19 +11,12 @@ interface JoinGroupModalProps {
 
 const JoinGroupModal = ({ isOpen, onClose, onJoin }: JoinGroupModalProps) => {
   const [code, setCode] = useState("");
-  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!code.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter an invite code",
-        variant: "destructive",
-      });
-      return;
+    if (code.trim()) {
+      onJoin(code);
     }
-    onJoin(code);
   };
 
   return (
