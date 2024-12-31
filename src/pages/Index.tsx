@@ -1,25 +1,13 @@
-import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import ReimbursementsView from "@/components/reimbursements/ReimbursementsView";
-import DashboardView from "@/components/dashboard/DashboardView";
-import { FinanceHubView } from "@/components/finance-hub/FinanceHubView";
+import { Routes, Route } from "react-router-dom";
 import { GroupsView } from "@/components/groups/GroupsView";
+import { ReimbursementFlow } from "@/components/reimbursements/ReimbursementFlow";
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState('dashboard');
-
   return (
-    <div className="flex h-screen bg-warm-50">
-      <Sidebar onNavigate={(view) => setCurrentView(view)} />
-
-      {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        {currentView === 'reimbursements' && <ReimbursementsView />}
-        {currentView === 'dashboard' && <DashboardView onNavigate={setCurrentView} />}
-        {currentView === 'finance-hub' && <FinanceHubView />}
-        {currentView === 'groups' && <GroupsView />}
-      </main>
-    </div>
+    <Routes>
+      <Route path="/" element={<GroupsView />} />
+      <Route path="/reimbursement" element={<ReimbursementFlow />} />
+    </Routes>
   );
 };
 

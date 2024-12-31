@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Group } from "./types";
@@ -8,6 +9,7 @@ interface GroupCardProps {
 }
 
 const GroupCard = ({ group, onSubmitReimbursement }: GroupCardProps) => {
+  const navigate = useNavigate();
   const formattedDate = new Date(group.createdAt).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -21,7 +23,10 @@ const GroupCard = ({ group, onSubmitReimbursement }: GroupCardProps) => {
         <CardDescription>Active since {formattedDate}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Button onClick={onSubmitReimbursement} className="w-full">
+        <Button 
+          onClick={() => navigate("/reimbursement")} 
+          className="w-full"
+        >
           Submit Reimbursements →
         </Button>
       </CardContent>
