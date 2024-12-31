@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Users2, BrainCircuit, ChevronDown, ChevronUp } from "lucide-react";
+import { Users2, ChevronDown, ChevronUp } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -91,19 +91,6 @@ const DashboardView = ({ onNavigate }: DashboardViewProps) => {
             />
           </CollapsibleContent>
         </Collapsible>
-      </Card>
-
-      {/* AI Recommendations Section */}
-      <Card className="p-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <BrainCircuit className="w-6 h-6 text-warm-500" />
-          <h2 className="text-xl font-semibold">Burse AI Suggests</h2>
-        </div>
-        <EmptyState
-          title="No AI Suggestions Yet"
-          description="AI recommendations will appear here once you start using the system."
-          icon={<BrainCircuit className="w-12 h-12 text-warm-400" />}
-        />
       </Card>
     </div>
   );
