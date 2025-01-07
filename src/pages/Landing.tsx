@@ -32,15 +32,14 @@ const Landing = () => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-5xl font-serif font-semibold leading-tight text-warm-500 mb-6">
-            Seamless Reimbursements Made Simple.
+            Simplify Research Administration.
           </h1>
           <p className="text-lg text-warm-400 mb-8">
-            Automate and streamline your expense approval process with AI-driven precision. 
-            Say goodbye to delays and inconsistent approvals.
+            Automate and streamline grants, reimbursements, and compliance so researchers can focus on what truly matters: advancing knowledge.
           </p>
           <Link to="/register">
             <Button className="bg-[#494E5B] text-white hover:bg-[#363B47]">
-              Try Now →
+              Get Started →
             </Button>
           </Link>
         </motion.div>
@@ -96,7 +95,7 @@ const Landing = () => {
       <section className="py-20 px-8 bg-white">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl font-serif text-warm-500 mb-8">
-            Ready to Transform Your Approvals?
+            Ready to Transform Your Research Administration?
           </h2>
           <Link to="/register">
             <Button className="bg-[#494E5B] text-white hover:bg-[#363B47]">
@@ -126,8 +125,8 @@ const features = [
         <line x1="8" y1="16" x2="12" y2="16" />
       </svg>
     ),
-    title: "AI-Powered Approvals",
-    description: "Automatically validate every reimbursement against your policies—no manual oversight required.",
+    title: "AI-Powered Grant Management",
+    description: "Automate grant compliance and expense validation, ensuring policies are met without manual intervention.",
   },
   {
     icon: () => (
@@ -135,8 +134,8 @@ const features = [
         <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
       </svg>
     ),
-    title: "Seamless ERP Integration",
-    description: "Easily connect with existing ERP systems like SAP, NetSuite, or QuickBooks to streamline your workflows.",
+    title: "Seamless Integration",
+    description: "Connect with your institution's existing systems for payroll, budgets, and compliance.",
   },
   {
     icon: () => (
@@ -146,8 +145,8 @@ const features = [
         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75" />
       </svg>
     ),
-    title: "Group & Team Support",
-    description: "Organize and manage reimbursement across projects, departments, or startup batches effortlessly.",
+    title: "Collaboration Made Easy",
+    description: "Manage projects, budgets, and reimbursements across teams and departments effortlessly.",
   },
   {
     icon: () => (
@@ -155,8 +154,8 @@ const features = [
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
       </svg>
     ),
-    title: "Automate and Grow",
-    description: "Free your team from repetitive admin tasks, enabling them to focus on growth and strategic priorities.",
+    title: "Focus on Discovery",
+    description: "Let automation handle the bureaucracy so your team can concentrate on research breakthroughs.",
   },
 ];
 
