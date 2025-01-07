@@ -25,24 +25,36 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-8 py-20 grid md:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-5xl font-serif font-semibold leading-tight text-warm-500 mb-6">
-            Simplify Research Administration.
-          </h1>
-          <p className="text-lg text-warm-400 mb-8">
-            Automate and streamline grants, reimbursements, and compliance so researchers can focus on what truly matters: advancing knowledge.
-          </p>
-          <Link to="/register">
-            <Button className="bg-[#494E5B] text-white hover:bg-[#363B47]">
-              Get Started →
-            </Button>
-          </Link>
-        </motion.div>
+      <section className="max-w-7xl mx-auto px-8 py-20">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          {/* Left column with heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-6xl font-serif font-semibold leading-tight text-warm-500">
+              Simplify Research Administration.
+            </h1>
+          </motion.div>
+
+          {/* Right column with description and button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col gap-8"
+          >
+            <p className="text-xl text-warm-400">
+              Automate and streamline grants, reimbursements, and compliance so researchers can focus on what truly matters: advancing knowledge.
+            </p>
+            <Link to="/register">
+              <Button className="bg-[#494E5B] text-white hover:bg-[#363B47] w-fit">
+                Get Started →
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
       {/* Features Section */}
