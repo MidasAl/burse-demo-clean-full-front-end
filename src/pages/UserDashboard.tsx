@@ -1,20 +1,74 @@
 import { useState } from "react";
-import { Download, Plus, Users } from "lucide-react";
+import { Download, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import Sidebar from "@/components/Sidebar";
 import { useNavigate } from "react-router-dom";
-import { GroupsView } from "@/components/groups/GroupsView";
+import JoinGroupModal from "@/components/groups/JoinGroupModal";
+import { useToast } from "@/hooks/use-toast";
+import { Group } from "@/components/groups/types";
 
 const UserDashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [groups, setGroups] = useState<Group[]>([]);
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // Dummy data for testing
+  const DUMMY_INVITE_CODES = {
+    'GROUP123': {
+      name: 'Duke Finance',
+      createdAt: '2024-02-11T00:00:00.000Z',
+    },
+    'DUKE2024': {
+      name: 'NYU Admin Group',
+      createdAt: '2024-01-01T00:00:00.000Z',
+    }
+  };
+
+  const handleJoinGroup = (code: string) => {
+    const groupData = DUMMY_INVITE_CODES[code as keyof typeof DUMMY_INVITE_CODES];
+    
+    if (!groupData) {
+      toast({
+        title: "Invalid Code",
+        description: "Please check your invite code and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newGroup: Group = {
+      id: Date.now().toString(),
+      name: groupData.name,
+      createdAt: groupData.createdAt,
+      inviteCode: code,
+    };
+
+    setGroups((prevGroups) => {
+      if (prevGroups.some(g => g.inviteCode === code)) {
+        toast({
+          title: "Already Joined",
+          description: "You've already joined this group.",
+          variant: "destructive",
+        });
+        return prevGroups;
+      }
+      
+      toast({
+        title: "Success!",
+        description: "You've successfully joined the group.",
+      });
+      return [...prevGroups, newGroup];
+    });
+    
+    setIsJoinModalOpen(false);
+  };
 
   const renderContent = () => {
     switch (currentView) {
-      case "groups":
-        return <GroupsView />;
       case "reimbursements":
         return (
           <div className="space-y-8">
@@ -70,36 +124,49 @@ const UserDashboard = () => {
                   Duke University
                 </div>
               </div>
-              <div className="flex gap-4">
-                <Button 
-                  onClick={() => setCurrentView("groups")}
-                  variant="outline"
-                  className="border-warm-200"
-                >
-                  <Users className="w-5 h-5 mr-2" />
-                  View Groups
-                </Button>
-                <Button 
-                  onClick={() => navigate("/reimbursement")}
-                  className="bg-warm-500 hover:bg-warm-400"
-                >
-                  <Plus className="w-5 h-5 mr-2" />
-                  New Reimbursement
-                </Button>
-              </div>
+              <Button 
+                onClick={() => navigate("/reimbursement")}
+                className="bg-warm-500 hover:bg-warm-400"
+              >
+                <Plus className="w-5 h-5 mr-2" />
+                New Reimbursement
+              </Button>
             </div>
 
-            <Card className="p-6">
-              <EmptyState
-                title="Welcome to Your Dashboard"
-                description="Start by joining a group or submitting a reimbursement request."
-                icon={
-                  <svg className="w-12 h-12 text-warm-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                }
-              />
-            </Card>
+            <div className="grid gap-6">
+              <Card className="p-6">
+                <EmptyState
+                  title="Welcome to Your Dashboard"
+                  description="Start by joining a group or submitting a reimbursement request."
+                  icon={
+                    <svg className="w-12 h-12 text-warm-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  }
+                />
+                <div className="flex justify-center p-6 pt-0">
+                  <Button onClick={() => setIsJoinModalOpen(true)}>
+                    Join a Group
+                  </Button>
+                </div>
+              </Card>
+
+              {groups.length > 0 && (
+                <Card className="p-6">
+                  <h2 className="text-xl font-semibold mb-4">Your Groups</h2>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {groups.map((group) => (
+                      <Card key={group.id} className="p-4">
+                        <h3 className="font-medium">{group.name}</h3>
+                        <p className="text-sm text-warm-400">
+                          Joined {new Date(group.createdAt).toLocaleDateString()}
+                        </p>
+                      </Card>
+                    ))}
+                  </div>
+                </Card>
+              )}
+            </div>
           </div>
         );
     }
@@ -111,6 +178,11 @@ const UserDashboard = () => {
       <main className="flex-1 p-8">
         {renderContent()}
       </main>
+      <JoinGroupModal
+        isOpen={isJoinModalOpen}
+        onClose={() => setIsJoinModalOpen(false)}
+        onJoin={handleJoinGroup}
+      />
     </div>
   );
 };
