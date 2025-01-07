@@ -26,7 +26,7 @@ const Landing = () => {
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-8 py-20">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-16 items-center relative">
           {/* Left column with heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -37,6 +37,9 @@ const Landing = () => {
               Simplify Research Administration.
             </h1>
           </motion.div>
+
+          {/* Vertical Divider */}
+          <div className="hidden md:block absolute right-1/2 h-full w-px bg-warm-200" />
 
           {/* Right column with description and button */}
           <motion.div
