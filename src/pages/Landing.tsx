@@ -6,23 +6,25 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-warm-50">
       {/* Navigation */}
-      <nav className="flex justify-between items-center px-12 py-4">
-        <Link to="/" className="text-2xl font-semibold text-warm-500">
-          Burse
-        </Link>
-        <div className="space-x-4">
-          <Link to="/sign-in">
-            <Button variant="ghost" className="text-warm-500">
-              Sign In
-            </Button>
+      <div className="w-full flex justify-center pt-6">
+        <nav className="flex justify-between items-center px-8 py-3 bg-white rounded-full shadow-sm w-[95%] max-w-7xl">
+          <Link to="/" className="text-2xl font-semibold text-warm-500">
+            Burse
           </Link>
-          <Link to="/register">
-            <Button className="bg-[#494E5B] text-white hover:bg-[#363B47]">
-              Register
-            </Button>
-          </Link>
-        </div>
-      </nav>
+          <div className="space-x-4">
+            <Link to="/sign-in">
+              <Button variant="ghost" className="text-warm-500">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button className="bg-[#494E5B] text-white hover:bg-[#363B47]">
+                Register
+              </Button>
+            </Link>
+          </div>
+        </nav>
+      </div>
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-12 py-20">
