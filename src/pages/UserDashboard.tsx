@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Download, Plus } from "lucide-react";
+import { Download, Plus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import Sidebar from "@/components/Sidebar";
 import { useNavigate } from "react-router-dom";
+import { GroupsView } from "@/components/groups/GroupsView";
 
 const UserDashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -12,6 +13,8 @@ const UserDashboard = () => {
 
   const renderContent = () => {
     switch (currentView) {
+      case "groups":
+        return <GroupsView />;
       case "reimbursements":
         return (
           <div className="space-y-8">
@@ -67,19 +70,29 @@ const UserDashboard = () => {
                   Duke University
                 </div>
               </div>
-              <Button 
-                onClick={() => navigate("/reimbursement")}
-                className="bg-warm-500 hover:bg-warm-400"
-              >
-                <Plus className="w-5 h-5 mr-2" />
-                New Reimbursement
-              </Button>
+              <div className="flex gap-4">
+                <Button 
+                  onClick={() => setCurrentView("groups")}
+                  variant="outline"
+                  className="border-warm-200"
+                >
+                  <Users className="w-5 h-5 mr-2" />
+                  View Groups
+                </Button>
+                <Button 
+                  onClick={() => navigate("/reimbursement")}
+                  className="bg-warm-500 hover:bg-warm-400"
+                >
+                  <Plus className="w-5 h-5 mr-2" />
+                  New Reimbursement
+                </Button>
+              </div>
             </div>
 
             <Card className="p-6">
               <EmptyState
                 title="Welcome to Your Dashboard"
-                description="Start by submitting a reimbursement request or viewing your existing requests."
+                description="Start by joining a group or submitting a reimbursement request."
                 icon={
                   <svg className="w-12 h-12 text-warm-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
