@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Download } from "lucide-react";
+import { Download, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import Sidebar from "@/components/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
+  const navigate = useNavigate();
 
   const renderContent = () => {
     switch (currentView) {
@@ -16,10 +18,19 @@ const UserDashboard = () => {
             {/* Header */}
             <div className="flex justify-between items-center">
               <h1 className="text-3xl font-semibold tracking-tight">Reimbursement Requests</h1>
-              <Button variant="default" className="bg-warm-500 hover:bg-warm-400">
-                <Download className="w-5 h-5 mr-2" />
-                Export
-              </Button>
+              <div className="flex gap-4">
+                <Button 
+                  onClick={() => navigate("/reimbursement")}
+                  className="bg-warm-500 hover:bg-warm-400"
+                >
+                  <Plus className="w-5 h-5 mr-2" />
+                  New Request
+                </Button>
+                <Button variant="default" className="bg-warm-500 hover:bg-warm-400">
+                  <Download className="w-5 h-5 mr-2" />
+                  Export
+                </Button>
+              </div>
             </div>
 
             {/* Balance Card */}
@@ -56,6 +67,13 @@ const UserDashboard = () => {
                   Duke University
                 </div>
               </div>
+              <Button 
+                onClick={() => navigate("/reimbursement")}
+                className="bg-warm-500 hover:bg-warm-400"
+              >
+                <Plus className="w-5 h-5 mr-2" />
+                New Reimbursement
+              </Button>
             </div>
 
             <Card className="p-6">
