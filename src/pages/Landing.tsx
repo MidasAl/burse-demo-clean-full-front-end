@@ -6,7 +6,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-warm-50">
       {/* Navigation */}
-      <nav className="flex justify-between items-center px-8 py-4">
+      <nav className="flex justify-between items-center px-12 py-4">
         <Link to="/" className="text-2xl font-semibold text-warm-500">
           Burse
         </Link>
@@ -25,7 +25,7 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-8 py-20">
+      <section className="max-w-7xl mx-auto px-12 py-20">
         <div className="grid md:grid-cols-2 gap-16 items-center relative">
           {/* Left column with heading */}
           <motion.div
@@ -61,7 +61,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-8 bg-white">
+      <section className="py-20 px-12 bg-white">
         <h2 className="text-4xl font-serif text-center text-warm-500 mb-16">
           Why Choose Burse?
         </h2>
@@ -87,7 +87,7 @@ const Landing = () => {
       </section>
 
       {/* Partners Section */}
-      <section className="py-20 px-8">
+      <section className="py-20 px-12">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl font-serif text-warm-500 mb-4">
             Our Partners
@@ -107,7 +107,7 @@ const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-8 bg-white">
+      <section className="py-20 px-12 bg-white">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl font-serif text-warm-500 mb-8">
             Ready to Transform Your Research Administration?
@@ -121,7 +121,7 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-warm-50 py-8 px-8">
+      <footer className="bg-warm-50 py-8 px-12">
         <div className="max-w-7xl mx-auto text-center text-warm-400">
           <p>© 2024 Burse. All rights reserved.</p>
         </div>
