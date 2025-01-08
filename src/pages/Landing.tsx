@@ -8,23 +8,23 @@ const Landing = () => {
       {/* Navigation */}
       <div className="w-full fixed top-0 z-50 px-8 py-6">
         <nav className="flex justify-between items-center max-w-7xl mx-auto">
-          <div className="space-x-4">
+          <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <span className="text-2xl font-light text-white">
+              burse
+            </span>
+          </Link>
+          <div className="ml-auto space-x-4">
             <Link to="/sign-in">
               <Button variant="ghost" className="text-white hover:bg-white/10">
                 Sign In
               </Button>
             </Link>
             <Link to="/register">
-              <Button variant="outline" className="text-white border-white hover:bg-white/10">
+              <Button variant="ghost" className="text-white hover:bg-white/10">
                 Register
               </Button>
             </Link>
           </div>
-          <Link to="/" className="absolute left-1/2 -translate-x-1/2">
-            <span className="text-2xl font-light text-white">
-              burse
-            </span>
-          </Link>
         </nav>
       </div>
 
@@ -35,15 +35,15 @@ const Landing = () => {
           backgroundImage: 'url("/lovable-uploads/685d07ba-496b-4539-b759-eeaf8f015310.png")',
         }}
       >
-        <div className="absolute inset-0 bg-black/20" /> {/* Overlay for better text readability */}
-        <div className="max-w-7xl mx-auto px-12 relative z-10 flex flex-col md:flex-row items-center justify-between gap-16">
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="max-w-7xl mx-auto px-12 relative z-10 flex flex-col md:flex-row items-center justify-between gap-16 mt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-white md:w-1/2"
           >
-            <h1 className="text-6xl font-serif font-semibold leading-tight mb-6">
+            <h1 className="text-5xl font-serif font-semibold leading-tight mb-6">
               Effortless Research Administration.
             </h1>
             <p className="text-xl text-white/90 mb-8">
