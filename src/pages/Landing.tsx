@@ -6,7 +6,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-warm-50">
       {/* Navigation */}
-      <div className="w-full flex justify-center pt-6">
+      <div className="w-full flex justify-center pt-6 fixed top-0 z-50">
         <nav className="flex justify-between items-center px-8 py-3 bg-white rounded-full shadow-sm w-[95%] max-w-7xl">
           <Link to="/" className="text-2xl font-semibold text-warm-500">
             Burse
@@ -27,34 +27,28 @@ const Landing = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-12 py-20">
-        <div className="grid md:grid-cols-2 gap-16 items-center relative">
-          {/* Left column with heading */}
+      <section 
+        className="h-screen w-full relative flex items-center justify-center bg-cover bg-center"
+        style={{
+          backgroundImage: 'url("/lovable-uploads/685d07ba-496b-4539-b759-eeaf8f015310.png")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/20" /> {/* Overlay for better text readability */}
+        <div className="max-w-7xl mx-auto px-12 relative z-10 flex flex-col md:flex-row items-center justify-between gap-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="text-white md:w-1/2"
           >
-            <h1 className="text-6xl font-serif font-semibold leading-tight text-warm-500">
-              Simplify Research Administration.
+            <h1 className="text-6xl font-serif font-semibold leading-tight mb-6">
+              Effortless Research Administration.
             </h1>
-          </motion.div>
-
-          {/* Vertical Divider */}
-          <div className="hidden md:block absolute right-1/2 h-full w-px bg-warm-200" />
-
-          {/* Right column with description and button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col gap-8"
-          >
-            <p className="text-xl text-warm-400">
-              Automate and streamline grants, reimbursements, and compliance so researchers can focus on what truly matters: advancing knowledge.
+            <p className="text-xl text-white/90 mb-8">
+              Automate and streamline grants, reimbursements, and compliance. Focus on advancing knowledge, not paperwork.
             </p>
             <Link to="/register">
-              <Button className="bg-[#494E5B] text-white hover:bg-[#363B47] w-fit">
+              <Button className="bg-white text-warm-500 hover:bg-white/90 w-fit text-lg px-8 py-6">
                 Get Started →
               </Button>
             </Link>
